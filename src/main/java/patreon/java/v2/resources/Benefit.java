@@ -38,30 +38,30 @@ public class Benefit extends BaseResource {
 		}
 	}
 
-	private String appExternalId;
-	private Object appMeta;
-	private String benefitType;
-	private String createdAt;
-	private int deliverablesDueTodayCount;
-	private int deliveredDeliverablesCount;
-	private String description;
-	private boolean isDeleted;
-	private boolean isEnded;
-	private boolean isPublished;
-	private String nextDeliverableDueDate;
-	private int notDeliveredDeliverablesCount;
-	private String ruleType;
-	private int tiersCount;
-	private String title;
+	public String appExternalId;
+	public Object appMeta;
+	public String benefitType;
+	public String createdAt;
+	public int deliverablesDueTodayCount;
+	public int deliveredDeliverablesCount;
+	public String description;
+	public boolean isDeleted;
+	public boolean isEnded;
+	public boolean isPublished;
+	public String nextDeliverableDueDate;
+	public int notDeliveredDeliverablesCount;
+	public String ruleType;
+	public int tiersCount;
+	public String title;
 
-	@Relationship("campaign")
+	@Relationship(value = "campaign", resolve = true)
 	private Campaign campaign;
 
 	@Relationship("deliverables")
-	private Deliverable[] deliverables;
+	private List<Deliverable> deliverables;
 
 	@Relationship("tiers")
-	private Tier[] tiers;
+	private List<Tier> tiers;
 
 	public Benefit(@JsonProperty("app_external_id") String appExternalId, @JsonProperty("app_meta") Object appMeta,
 			@JsonProperty("benefit_type") String benefitType, @JsonProperty("created_at") String createdAt,
@@ -73,7 +73,7 @@ public class Benefit extends BaseResource {
 			@JsonProperty("not_delivered_deliverables_count") int notDeliveredDeliverablesCount,
 			@JsonProperty("rule_type") String ruleType, @JsonProperty("tiers_count") int tiersCount,
 			@JsonProperty("title") String title, @JsonProperty("campaign") Campaign campaign,
-			@JsonProperty("deliverables") Deliverable[] deliverables, @JsonProperty("tiers") Tier[] tiers) {
+			@JsonProperty("deliverables") List<Deliverable> deliverables, @JsonProperty("tiers") List<Tier> tiers) {
 		this.appExternalId = appExternalId;
 		this.appMeta = appMeta;
 		this.benefitType = benefitType;
@@ -158,11 +158,11 @@ public class Benefit extends BaseResource {
 		return campaign;
 	}
 
-	public Deliverable[] getDeliverables() {
+	public List<Deliverable> getDeliverables() {
 		return deliverables;
 	}
 
-	public Tier[] getTiers() {
+	public List<Tier> getTiers() {
 		return tiers;
 	}
 }

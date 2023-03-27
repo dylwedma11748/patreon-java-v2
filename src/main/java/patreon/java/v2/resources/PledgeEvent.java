@@ -33,13 +33,13 @@ public class PledgeEvent extends BaseResource {
 		}
 	}
 
-	private int amount_cents;
-	private String currency_code;
-	private String date;
-	private String payment_status;
-	private String tier_id;
-	private String tier_title;
-	private String type;
+	public int amount_cents;
+	public String currency_code;
+	public String date;
+	public String payment_status;
+	public String tier_id;
+	public String tier_title;
+	public String type;
 
 	@Relationship("campaign")
 	private Campaign campaign;
@@ -66,45 +66,5 @@ public class PledgeEvent extends BaseResource {
 		this.campaign = campaign;
 		this.patron = patron;
 		this.tier = tier;
-	}
-
-	public int getAmount_cents() {
-		return amount_cents;
-	}
-
-	public String getCurrency_code() {
-		return currency_code;
-	}
-
-	public String getDate() {
-		return date;
-	}
-
-	public String getPayment_status() {
-		return payment_status;
-	}
-
-	public String getTier_id() {
-		return tier_id;
-	}
-
-	public String getTier_title() {
-		return tier_title;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public Campaign getCampaign() {
-		return campaign;
-	}
-
-	public User getPatron() {
-		return patron;
-	}
-
-	public Tier getTier() {
-		return tier;
 	}
 }

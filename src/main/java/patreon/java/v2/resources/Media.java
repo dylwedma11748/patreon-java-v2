@@ -34,20 +34,20 @@ public class Media extends BaseResource {
 		}
 	}
 
-	private String created_at;
-	private String download_url;
-	private String file_name;
-	private Object image_urls;
-	private Object metadata;
-	private String mimetype;
-	private String owner_id;
-	private String owner_relationship;
-	private String owner_type;
-	private int size_bytes;
-	private String state;
-	private String upload_expires_at;
-	private Object upload_parameters;
-	private String upload_url;
+	public String created_at;
+	public String download_url;
+	public String file_name;
+	public Object image_urls;
+	public Object metadata;
+	public String mimetype;
+	public String owner_id;
+	public String owner_relationship;
+	public String owner_type;
+	public int size_bytes;
+	public String state;
+	public String upload_expires_at;
+	public Object upload_parameters;
+	public String upload_url;
 
 	public Media(@JsonProperty("created_at") String created_at, @JsonProperty("download_url") String download_url,
 			@JsonProperty("file_name") String file_name, @JsonProperty("image_urls") Object image_urls,
@@ -71,61 +71,5 @@ public class Media extends BaseResource {
 		this.upload_expires_at = upload_expires_at;
 		this.upload_parameters = upload_parameters;
 		this.upload_url = upload_url;
-	}
-
-	public String getCreated_at() {
-		return created_at;
-	}
-
-	public String getDownload_url() {
-		return download_url;
-	}
-
-	public String getFile_name() {
-		return file_name;
-	}
-
-	public Object getImage_urls() {
-		return image_urls;
-	}
-
-	public Object getMetadata() {
-		return metadata;
-	}
-
-	public String getMimetype() {
-		return mimetype;
-	}
-
-	public String getOwner_id() {
-		return owner_id;
-	}
-
-	public String getOwner_relationship() {
-		return owner_relationship;
-	}
-
-	public String getOwner_type() {
-		return owner_type;
-	}
-
-	public int getSize_bytes() {
-		return size_bytes;
-	}
-
-	public String getState() {
-		return state;
-	}
-
-	public String getUpload_expires_at() {
-		return upload_expires_at;
-	}
-
-	public Object getUpload_parameters() {
-		return upload_parameters;
-	}
-
-	public String getUpload_url() {
-		return upload_url;
 	}
 }

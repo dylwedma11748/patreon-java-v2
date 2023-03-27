@@ -7,10 +7,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.jasminb.jsonapi.annotations.Relationship;
 import com.github.jasminb.jsonapi.annotations.Type;
 
+import patreon.java.v2.resources.shared.BaseResource;
 import patreon.java.v2.resources.shared.Field;
 
 @Type("post")
-public class Post {
+public class Post extends BaseResource {
 
 	public enum PostField implements Field {
 		app_id("app_id"), app_status("app_status"), content("content"), embed_data("embed_data"),
@@ -33,17 +34,17 @@ public class Post {
 		}
 	}
 
-	private int app_id;
-	private String app_status;
-	private String content;
-	private Object embed_data;
-	private String embed_url;
-	private boolean is_paid;
-	private boolean is_public;
-	private Tier[] tiers;
-	private String published_at;
-	private String title;
-	private String url;
+	public int app_id;
+	public String app_status;
+	public String content;
+	public Object embed_data;
+	public String embed_url;
+	public boolean is_paid;
+	public boolean is_public;
+	public Tier[] tiers;
+	public String published_at;
+	public String title;
+	public String url;
 
 	@Relationship("user")
 	private User user;
@@ -71,57 +72,5 @@ public class Post {
 		this.url = url;
 		this.user = user;
 		this.campaign = campaign;
-	}
-
-	public int getApp_id() {
-		return app_id;
-	}
-
-	public String getApp_status() {
-		return app_status;
-	}
-
-	public String getContent() {
-		return content;
-	}
-
-	public Object getEmbed_data() {
-		return embed_data;
-	}
-
-	public String getEmbed_url() {
-		return embed_url;
-	}
-
-	public boolean isIs_paid() {
-		return is_paid;
-	}
-
-	public boolean isIs_public() {
-		return is_public;
-	}
-
-	public Tier[] getTiers() {
-		return tiers;
-	}
-
-	public String getPublished_at() {
-		return published_at;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public Campaign getCampaign() {
-		return campaign;
 	}
 }

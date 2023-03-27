@@ -32,21 +32,21 @@ public class Deliverable extends BaseResource {
 		}
 	}
 
-	private String completed_at;
-	private String delivery_status;
-	private String due_at;
+	public String completed_at;
+	public String delivery_status;
+	public String due_at;
 
 	@Relationship("benefit")
-	private Benefit benefit;
+	public Benefit benefit;
 
 	@Relationship("campaign")
-	private Campaign campaign;
+	public Campaign campaign;
 
 	@Relationship("member")
-	private Member member;
+	public Member member;
 
 	@Relationship("user")
-	private User user;
+	public User user;
 
 	public Deliverable(@JsonProperty("completed_at") String completed_at,
 			@JsonProperty("delivery_status") String delivery_status, @JsonProperty("due_at") String due_at,
@@ -59,33 +59,5 @@ public class Deliverable extends BaseResource {
 		this.campaign = campaign;
 		this.member = member;
 		this.user = user;
-	}
-
-	public String getCompleted_at() {
-		return completed_at;
-	}
-
-	public String getDelivery_status() {
-		return delivery_status;
-	}
-
-	public String getDue_at() {
-		return due_at;
-	}
-
-	public Benefit getBenefit() {
-		return benefit;
-	}
-
-	public Campaign getCampaign() {
-		return campaign;
-	}
-
-	public Member getMember() {
-		return member;
-	}
-
-	public User getUser() {
-		return user;
 	}
 }

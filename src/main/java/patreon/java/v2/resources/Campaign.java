@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.github.jasminb.jsonapi.RelType;
 import com.github.jasminb.jsonapi.annotations.Relationship;
 import com.github.jasminb.jsonapi.annotations.Type;
 
@@ -40,89 +41,89 @@ public class Campaign extends BaseResource {
 		}
 	}
 
-	private String created_at;
-	private String creation_name;
-	private String discord_server_id;
-	private String google_analytics_id;
-	private boolean has_rss;
-	private boolean has_sent_rss_notify;
-	private String image_small_url;
-	private String image_url;
-	private boolean is_charged_immediately;
-	private boolean is_monthly;
-	private boolean is_nsfw;
-	private String main_video_embed;
-	private String main_video_url;
-	private String one_liner;
-	private int patron_count;
-	private String pay_per_name;
-	private String pledge_url;
-	private String published_at;
-	private String rss_artwork_url;
-	private String rss_feed_title;
-	private boolean show_earnings;
+	private String createdAt;
+	private String creationName;
+	private String discordServerID;
+	private String googleAnalyticsID;
+	private boolean hasRSS;
+	private boolean hasSentRSSNotify;
+	private String imageSmallURL;
+	private String imageURL;
+	private boolean isChargedImmediately;
+	private boolean isMonthly;
+	private boolean isNSFW;
+	private String mainVideoEmbed;
+	private String mainVideoURL;
+	private String oneLiner;
+	private int patronCount;
+	private String payPerName;
+	private String pledgeURL;
+	private String publishedAt;
+	private String rssArtworkURL;
+	private String rssFeedTitle;
+	private boolean showEarnings;
 	private String summary;
-	private String thanks_embed;
-	private String thanks_msg;
-	private String thanks_video_url;
+	private String thanksEmbed;
+	private String thanksMsg;
+	private String thanksVideoURL;
 	private String url;
 	private String vanity;
 
 	@Relationship("benefits")
-	private Benefit[] benefits;
+	private List<Benefit> benefits;
 
-	@Relationship("creator")
+	@Relationship(value = "creator", resolve = true, relType = RelType.RELATED)
 	private User creator;
 
 	@Relationship("goals")
-	private Goal[] goals;
+	private List<Goal> goals;
 
 	@Relationship("tiers")
-	private Tier[] tiers;
+	private List<Tier> tiers;
 
-	public Campaign(@JsonProperty("created_at") String created_at, @JsonProperty("creation_name") String creation_name,
-			@JsonProperty("discord_server_id") String discord_server_id,
-			@JsonProperty("google_analytics_id") String google_analytics_id, @JsonProperty("has_rss") boolean has_rss,
-			@JsonProperty("has_sent_rss_notify") boolean has_sent_rss_notify,
-			@JsonProperty("image_small_url") String image_small_url, @JsonProperty("image_url") String image_url,
-			@JsonProperty("is_charged_immediately") boolean is_charged_immediately,
-			@JsonProperty("is_monthly") boolean is_monthly, @JsonProperty("is_nsfw") boolean is_nsfw,
-			@JsonProperty("main_video_embed") String main_video_embed,
-			@JsonProperty("main_video_url") String main_video_url, @JsonProperty("one_liner") String one_liner,
-			@JsonProperty("patron_count") int patron_count, @JsonProperty("pay_per_name") String pay_per_name,
-			@JsonProperty("pledge_url") String pledge_url, @JsonProperty("published_at") String published_at,
-			@JsonProperty("rss_artwork_url") String rss_artwork_url,
-			@JsonProperty("rss_feed_title") String rss_feed_title, @JsonProperty("show_earnings") boolean show_earnings,
-			@JsonProperty("summary") String summary, @JsonProperty("thanks_embed") String thanks_embed,
-			@JsonProperty("thanks_msg") String thanks_msg, @JsonProperty("thanks_video_url") String thanks_video_url,
-			@JsonProperty("url") String url, @JsonProperty("vanity") String vanity,
-			@JsonProperty("benefits") Benefit[] benefits, @JsonProperty("creator") User creator,
-			@JsonProperty("goals") Goal[] goals, @JsonProperty("tiers") Tier[] tiers) {
-		this.created_at = created_at;
-		this.creation_name = creation_name;
-		this.discord_server_id = discord_server_id;
-		this.google_analytics_id = google_analytics_id;
-		this.has_rss = has_rss;
-		this.has_sent_rss_notify = has_sent_rss_notify;
-		this.image_small_url = image_small_url;
-		this.image_url = image_url;
-		this.is_charged_immediately = is_charged_immediately;
-		this.is_monthly = is_monthly;
-		this.is_nsfw = is_nsfw;
-		this.main_video_embed = main_video_embed;
-		this.main_video_url = main_video_url;
-		this.one_liner = one_liner;
-		this.patron_count = patron_count;
-		this.pay_per_name = pay_per_name;
-		this.pledge_url = pledge_url;
-		this.published_at = published_at;
-		this.rss_artwork_url = rss_artwork_url;
-		this.rss_feed_title = rss_feed_title;
-		this.show_earnings = show_earnings;
+	public Campaign(@JsonProperty("created_at") String createdAt, @JsonProperty("creation_name") String creationName,
+			@JsonProperty("discord_server_id") String discordServerID,
+			@JsonProperty("google_analytics_id") String googleAnalyticsID, @JsonProperty("has_rss") boolean hasRSS,
+			@JsonProperty("has_sent_rss_notify") boolean hasSentRSSNotify,
+			@JsonProperty("image_small_url") String imageSmallURL, @JsonProperty("image_url") String imageURL,
+			@JsonProperty("is_charged_immediately") boolean isChargedImmediately,
+			@JsonProperty("is_monthly") boolean isMonthly, @JsonProperty("is_nsfw") boolean isNSFW,
+			@JsonProperty("main_video_embed") String mainVideoEmbed,
+			@JsonProperty("main_video_url") String mainVideoURL, @JsonProperty("one_liner") String oneLiner,
+			@JsonProperty("patron_count") int patronCount, @JsonProperty("pay_per_name") String payPerName,
+			@JsonProperty("pledge_url") String pledgeURL, @JsonProperty("published_at") String publishedAt,
+			@JsonProperty("rss_artwork_url") String rssArtworkURL, @JsonProperty("rss_feed_title") String rssFeedTitle,
+			@JsonProperty("show_earnings") boolean showEarnings, @JsonProperty("summary") String summary,
+			@JsonProperty("thanks_embed") String thanksEmbed, @JsonProperty("thanks_msg") String thanksMsg,
+			@JsonProperty("thanks_video_url") String thanksVideoURL, @JsonProperty("url") String url,
+			@JsonProperty("vanity") String vanity, @JsonProperty("benefits") List<Benefit> benefits,
+			@JsonProperty("creator") User creator, @JsonProperty("goals") List<Goal> goals,
+			@JsonProperty("tiers") List<Tier> tiers) {
+		this.createdAt = createdAt;
+		this.creationName = creationName;
+		this.discordServerID = discordServerID;
+		this.googleAnalyticsID = googleAnalyticsID;
+		this.hasRSS = hasRSS;
+		this.hasSentRSSNotify = hasSentRSSNotify;
+		this.imageSmallURL = imageSmallURL;
+		this.imageURL = imageURL;
+		this.isChargedImmediately = isChargedImmediately;
+		this.isMonthly = isMonthly;
+		this.isNSFW = isNSFW;
+		this.mainVideoEmbed = mainVideoEmbed;
+		this.mainVideoURL = mainVideoURL;
+		this.oneLiner = oneLiner;
+		this.patronCount = patronCount;
+		this.payPerName = payPerName;
+		this.pledgeURL = pledgeURL;
+		this.publishedAt = publishedAt;
+		this.rssArtworkURL = rssArtworkURL;
+		this.rssFeedTitle = rssFeedTitle;
+		this.showEarnings = showEarnings;
 		this.summary = summary;
-		this.thanks_embed = thanks_embed;
-		this.thanks_msg = thanks_msg;
-		this.thanks_video_url = thanks_video_url;
+		this.thanksEmbed = thanksEmbed;
+		this.thanksMsg = thanksMsg;
+		this.thanksVideoURL = thanksVideoURL;
 		this.url = url;
 		this.vanity = vanity;
 		this.benefits = benefits;
@@ -131,183 +132,249 @@ public class Campaign extends BaseResource {
 		this.tiers = tiers;
 	}
 
+	/**
+     * Returns the date and time that the creator first began the campaign creation process.
+     * @return     the date and time that the campaign was first created. (UTC ISO format)
+     * @see    #Campaign.getPublishedAt()
+     */
 	public String getCreatedAt() {
-		return created_at;
+		return createdAt;
 	}
 
+	/**
+     * Returns the type of content the creator is creating, as in "creator is creating ...". Can be null.
+     * @return     the type of content the creator is creating
+     */
 	public String getCreationName() {
-		return creation_name;
+		return creationName;
 	}
 
-	public String getDiscord_server_id() {
-		return discord_server_id;
+	/**
+     * Returns the ID of the external Discord server that is linked to this campaign. Can be null.
+     * @return     the Discord server ID or null
+     */
+	public String getDiscordServerID() {
+		return discordServerID;
 	}
 
-	public String getGoogle_analytics_id() {
-		return google_analytics_id;
+	/**
+     * Returns the ID of the Google Analytics tracker that the creator wants metrics to be sent to. Can be null.
+     * @return     the Google Analytics ID or null
+     */
+	public String getGoogleAnalyticsID() {
+		return googleAnalyticsID;
 	}
 
-	public boolean isHas_rss() {
-		return has_rss;
+	/**
+     * Returns whether this user has opted-in to RSS feeds.
+     * @return     true or false
+     */
+	public boolean hasRSS() {
+		return hasRSS;
 	}
 
-	public boolean isHas_sent_rss_notify() {
-		return has_sent_rss_notify;
+	/**
+     * Returns whether or not the creator has sent a one-time RSS notification email.
+     * @return     true or false
+     */
+	public boolean hasSentRSSNotify() {
+		return hasSentRSSNotify;
 	}
 
-	public String getImage_small_url() {
-		return image_small_url;
+	/**
+     * Returns the URL for the campaign's profile image.
+     * @return     the campaign's profile image URL
+     */
+	public String getImageSmallURL() {
+		return imageSmallURL;
 	}
 
-	public String getImage_url() {
-		return image_url;
+	/**
+     * Returns the banner image URL for the campaign.
+     * @return     the campaign's banner image URL
+     */
+	public String getImageURL() {
+		return imageURL;
 	}
 
-	public boolean isIs_charged_immediately() {
-		return is_charged_immediately;
+	/**
+     * Returns whether the campaign charges upfront. Can be null.
+     * @return     true if the campaign charges upfront, false otherwise
+     */
+	public boolean isChargedImmediately() {
+		return isChargedImmediately;
 	}
 
-	public boolean isIs_monthly() {
-		return is_monthly;
+	/**
+     * Returns whether the campaign charges per month.
+     * @return     true if the campaign charges per month, false if the campaign charges per-post
+     */
+	public boolean isMonthly() {
+		return isMonthly;
 	}
 
-	public boolean isIs_nsfw() {
-		return is_nsfw;
+	/**
+     * Returns whether if the creator has marked the campaign as containing NSFW content.
+     * @return     true if the creator has marked the campaign as containing NSFW content.
+     */
+	public boolean isNSFW() {
+		return isNSFW;
 	}
 
-	public String getMain_video_embed() {
-		return main_video_embed;
+	/**
+     * Can be null. (That's all it says in Patreon's API docs. Blame them, not me.)
+     */
+	public String getMainVideoEmbed() {
+		return mainVideoEmbed;
 	}
 
+	/**
+     * Can be null. (That's all it says in Patreon's API docs. Blame them, not me.)
+     */
 	public String getMainVideoURL() {
-		return main_video_url;
+		return mainVideoURL;
 	}
 
+	/**
+     * Returns the pithy one-liner for this campaign, displayed on the creator page. Can be null.
+     * @return     one-liner for this campaign or null
+     */
 	public String getOneLiner() {
-		return one_liner;
+		return oneLiner;
 	}
 
+	/**
+     * Returns the number of patrons pledging to this creator.
+     * @return     the number of patrons
+     */
 	public int getPatronCount() {
-		return patron_count;
+		return patronCount;
 	}
 
+	/**
+     * Returns the thing which patrons are paying per, as in "Creator is making $1000 per ...". Can be null.
+     * @return     the thing or null
+     */
 	public String getPayPerName() {
-		return pay_per_name;
+		return payPerName;
 	}
 
-	public String getPledgeUrl() {
-		return pledge_url;
+	/**
+     * Returns the relative (to patreon.com) URL for the pledge checkout flow for this campaign.
+     * @return     the relative URL for the pledge checkout flow
+     */
+	public String getPledgeURL() {
+		return pledgeURL;
 	}
 
+	/**
+     * Returns the date and time that the creator most recently published (made publicly visible) the campaign. Can be null.
+     * @return     the most recent date and time or null. (UTC ISO format)
+     */
 	public String getPublishedAt() {
-		return published_at;
+		return publishedAt;
 	}
 
-	public String getRssArtworkUrl() {
-		return rss_artwork_url;
+	/**
+     * Returns the URL for the RSS album artwork. Can be null.
+     * @return     the URL for the RSS album artwork or null.
+     */
+	public String getRssArtworkURL() {
+		return rssArtworkURL;
 	}
 
+	/**
+     * Returns the title of the campaign's RSS feed.
+     * @return     the title of the campaign's RSS feed.
+     */
 	public String getRssFeedTitle() {
-		return rss_feed_title;
+		return rssFeedTitle;
 	}
 
+	/**
+     * Returns whether the campaign's total earnings are shown publicly.
+     * @return     true if campaign's earnings are public, false otherwise
+     */
 	public boolean isShowEarnings() {
-		return show_earnings;
+		return showEarnings;
 	}
 
+	/**
+     * Returns the creator's summary of their campaign. Can be null.
+     * @return     the creator's summary or null
+     */
 	public String getSummary() {
 		return summary;
 	}
 
+	/**
+     * Can be null. (That's all it says in Patreon's API docs. Blame them, not me.)
+     */
 	public String getThanksEmbed() {
-		return thanks_embed;
+		return thanksEmbed;
 	}
 
+	/**
+     * Returns the thank you message shown to patrons after they pledge to this campaign. Can be null.
+     * @return     the thank you message or null
+     */
 	public String getThanksMsg() {
-		return thanks_msg;
+		return thanksMsg;
 	}
 
+	/**
+     * Returns the URL for the video shown to patrons after they pledge to this campaign. Can be null.
+     * @return     the video URL or null
+     */
 	public String getThanksVideoURL() {
-		return thanks_video_url;
+		return thanksVideoURL;
 	}
 
-	public String getUrl() {
+	/**
+     * Returns a URL to access this campaign on patreon.com
+     * @return     this campaign's URL
+     */
+	public String getURL() {
 		return url;
 	}
 
+	/**
+     * Returns the campaign's vanity. Can be null.
+     * @return     this campaign's vanity or null
+     */
 	public String getVanity() {
 		return vanity;
 	}
 
-	public String getCreated_at() {
-		return created_at;
-	}
-
-	public String getCreation_name() {
-		return creation_name;
-	}
-
-	public String getMain_video_url() {
-		return main_video_url;
-	}
-
-	public String getOne_liner() {
-		return one_liner;
-	}
-
-	public int getPatron_count() {
-		return patron_count;
-	}
-
-	public String getPay_per_name() {
-		return pay_per_name;
-	}
-
-	public String getPledge_url() {
-		return pledge_url;
-	}
-
-	public String getPublished_at() {
-		return published_at;
-	}
-
-	public String getRss_artwork_url() {
-		return rss_artwork_url;
-	}
-
-	public String getRss_feed_title() {
-		return rss_feed_title;
-	}
-
-	public boolean isShow_earnings() {
-		return show_earnings;
-	}
-
-	public String getThanks_embed() {
-		return thanks_embed;
-	}
-
-	public String getThanks_msg() {
-		return thanks_msg;
-	}
-
-	public String getThanks_video_url() {
-		return thanks_video_url;
-	}
-
-	public Benefit[] getBenefits() {
+	/**
+     * Returns the campaign's benefits.
+     * @return     the campaign's benefits
+     */
+	public List<Benefit> getBenefits() {
 		return benefits;
 	}
 
+	/**
+     * Returns the campaign owner.
+     * @return     the campaign owner
+     */
 	public User getCreator() {
 		return creator;
 	}
 
-	public Goal[] getGoals() {
+	/**
+     * Returns the campaign's goals.
+     * @return     the campaign's goals.
+     */
+	public List<Goal> getGoals() {
 		return goals;
 	}
 
-	public Tier[] getTiers() {
+	/**
+     * Returns the campaign's tiers.
+     * @return     the campaign's tiers.
+     */
+	public List<Tier> getTiers() {
 		return tiers;
 	}
 }

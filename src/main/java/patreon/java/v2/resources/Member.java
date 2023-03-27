@@ -36,35 +36,35 @@ public class Member extends BaseResource {
 		}
 	}
 
-	private int campaign_lifetime_support_cents;
-	private int currently_entitled_amount_cents;
-	private String email;
-	private String full_name;
-	private boolean is_follower;
-	private String last_charge_date;
-	private String last_charge_status;
-	private int lifetime_support_cents;
-	private String next_charge_date;
-	private String note;
-	private String patron_status;
-	private int pledge_cadence;
-	private String pledge_relationship_start;
-	private int will_pay_amount_cents;
+	public int campaign_lifetime_support_cents;
+	public int currently_entitled_amount_cents;
+	public String email;
+	public String full_name;
+	public boolean is_follower;
+	public String last_charge_date;
+	public String last_charge_status;
+	public int lifetime_support_cents;
+	public String next_charge_date;
+	public String note;
+	public String patron_status;
+	public int pledge_cadence;
+	public String pledge_relationship_start;
+	public int will_pay_amount_cents;
 
 	@Relationship("address")
-	private Address address;
+	public Address address;
 
 	@Relationship("campaign")
-	private Campaign campaign;
+	public Campaign campaign;
 
 	@Relationship("currently_entitled_tiers")
-	private Tier[] currently_entitled_tiers;
+	public List<Tier> currently_entitled_tiers;
 
 	@Relationship("pledge_history")
-	private PledgeEvent[] pledge_history;
+	public List<PledgeEvent> pledge_history;
 
 	@Relationship("user")
-	private User user;
+	public User user;
 
 	public Member(@JsonProperty("campaign_lifetime_support_cents") int campaign_lifetime_support_cents,
 			@JsonProperty("currently_entitled_amount_cents") int currently_entitled_amount_cents,
@@ -77,8 +77,8 @@ public class Member extends BaseResource {
 			@JsonProperty("pledge_relationship_start") String pledge_relationship_start,
 			@JsonProperty("will_pay_amount_cents") int will_pay_amount_cents, @JsonProperty("address") Address address,
 			@JsonProperty("campaign") Campaign campaign,
-			@JsonProperty("currently_entitled_tiers") Tier[] currently_entitled_tiers,
-			@JsonProperty("pledge_history") PledgeEvent[] pledge_history, @JsonProperty("user") User user) {
+			@JsonProperty("currently_entitled_tiers") List<Tier> currently_entitled_tiers,
+			@JsonProperty("pledge_history") List<PledgeEvent> pledge_history, @JsonProperty("user") User user) {
 		this.campaign_lifetime_support_cents = campaign_lifetime_support_cents;
 		this.currently_entitled_amount_cents = currently_entitled_amount_cents;
 		this.email = email;
@@ -98,81 +98,5 @@ public class Member extends BaseResource {
 		this.currently_entitled_tiers = currently_entitled_tiers;
 		this.pledge_history = pledge_history;
 		this.user = user;
-	}
-
-	public int getCampaign_lifetime_support_cents() {
-		return campaign_lifetime_support_cents;
-	}
-
-	public int getCurrently_entitled_amount_cents() {
-		return currently_entitled_amount_cents;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public String getFull_name() {
-		return full_name;
-	}
-
-	public boolean isIs_follower() {
-		return is_follower;
-	}
-
-	public String getLast_charge_date() {
-		return last_charge_date;
-	}
-
-	public String getLast_charge_status() {
-		return last_charge_status;
-	}
-
-	public int getLifetime_support_cents() {
-		return lifetime_support_cents;
-	}
-
-	public String getNext_charge_date() {
-		return next_charge_date;
-	}
-
-	public String getNote() {
-		return note;
-	}
-
-	public String getPatron_status() {
-		return patron_status;
-	}
-
-	public int getPledge_cadence() {
-		return pledge_cadence;
-	}
-
-	public String getPledge_relationship_start() {
-		return pledge_relationship_start;
-	}
-
-	public int getWill_pay_amount_cents() {
-		return will_pay_amount_cents;
-	}
-
-	public Address getAddress() {
-		return address;
-	}
-
-	public Campaign getCampaign() {
-		return campaign;
-	}
-
-	public Tier[] getCurrently_entitled_tiers() {
-		return currently_entitled_tiers;
-	}
-
-	public PledgeEvent[] getPledge_history() {
-		return pledge_history;
-	}
-
-	public User getUser() {
-		return user;
 	}
 }

@@ -36,31 +36,31 @@ public class Tier extends BaseResource {
 		}
 	}
 
-	private int amount_cents;
-	private String created_at;
-	private String description;
-	private Object discord_role_ids;
-	private String edited_at;
-	private String image_url;
-	private int patron_count;
-	private int post_count;
-	private boolean published;
-	private String published_at;
-	private int remaining;
-	private boolean requires_shipping;
-	private String title;
-	private String unpublished_at;
-	private String url;
-	private int user_limit;
+	public int amount_cents;
+	public String created_at;
+	public String description;
+	public Object discord_role_ids;
+	public String edited_at;
+	public String image_url;
+	public int patron_count;
+	public int post_count;
+	public boolean published;
+	public String published_at;
+	public int remaining;
+	public boolean requires_shipping;
+	public String title;
+	public String unpublished_at;
+	public String url;
+	public int user_limit;
 
 	@Relationship("benefits")
-	private Benefit[] benefits;
+	public List<Benefit> benefits;
 
 	@Relationship("campaign")
-	private Campaign campaign;
+	public Campaign campaign;
 
 	@Relationship("tier_image")
-	private Media tier_image;
+	public Media tier_image;
 
 	public Tier(@JsonProperty("amount_cents") int amount_cents, @JsonProperty("created_at") String created_at,
 			@JsonProperty("description") String description, @JsonProperty("discord_role_ids") Object discord_role_ids,
@@ -70,7 +70,7 @@ public class Tier extends BaseResource {
 			@JsonProperty("remaining") int remaining, @JsonProperty("requires_shipping") boolean requires_shipping,
 			@JsonProperty("title") String title, @JsonProperty("unpublished_at") String unpublished_at,
 			@JsonProperty("url") String url, @JsonProperty("user_limit") int user_limit,
-			@JsonProperty("benefits") Benefit[] benefits, @JsonProperty("campaign") Campaign campaign,
+			@JsonProperty("benefits") List<Benefit> benefits, @JsonProperty("campaign") Campaign campaign,
 			@JsonProperty("tier_image") Media tier_image) {
 		this.amount_cents = amount_cents;
 		this.created_at = created_at;
@@ -91,81 +91,5 @@ public class Tier extends BaseResource {
 		this.benefits = benefits;
 		this.campaign = campaign;
 		this.tier_image = tier_image;
-	}
-
-	public int getAmount_cents() {
-		return amount_cents;
-	}
-
-	public String getCreated_at() {
-		return created_at;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public Object getDiscord_role_ids() {
-		return discord_role_ids;
-	}
-
-	public String getEdited_at() {
-		return edited_at;
-	}
-
-	public String getImage_url() {
-		return image_url;
-	}
-
-	public int getPatron_count() {
-		return patron_count;
-	}
-
-	public int getPost_count() {
-		return post_count;
-	}
-
-	public boolean isPublished() {
-		return published;
-	}
-
-	public String getPublished_at() {
-		return published_at;
-	}
-
-	public int getRemaining() {
-		return remaining;
-	}
-
-	public boolean isRequires_shipping() {
-		return requires_shipping;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public String getUnpublished_at() {
-		return unpublished_at;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
-	public int getUser_limit() {
-		return user_limit;
-	}
-
-	public Benefit[] getBenefits() {
-		return benefits;
-	}
-
-	public Campaign getCampaign() {
-		return campaign;
-	}
-
-	public Media getTier_image() {
-		return tier_image;
 	}
 }
