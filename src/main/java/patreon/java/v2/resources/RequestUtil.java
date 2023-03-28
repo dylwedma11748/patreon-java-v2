@@ -13,7 +13,7 @@ public class RequestUtil {
 		URL url = buildUrl(pathSuffix);
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		connection.setRequestProperty("Authorization", "Bearer ".concat(accessToken));
-		connection.setRequestProperty("User-Agent", String.format("Patreon-Java, version %s, platform %s %s",
+		connection.setRequestProperty("User-Agent", String.format("patreon-java-v2, version %s, platform %s %s",
 				getVersion(), System.getProperty("os.name"), System.getProperty("os.version")));
 		return connection.getInputStream();
 	}
@@ -29,10 +29,9 @@ public class RequestUtil {
 	}
 
 	private String getVersion() throws IOException {
-//		InputStream resourceAsStream = this.getClass().getResourceAsStream("/version.properties");
-//		java.util.Properties prop = new java.util.Properties();
-//		prop.load(resourceAsStream);
-//		return prop.getProperty("version");
-		return "0.4.2";
+		InputStream resourceAsStream = this.getClass().getResourceAsStream("/version.properties");
+		java.util.Properties prop = new java.util.Properties();
+		prop.load(resourceAsStream);
+		return prop.getProperty("version");
 	}
 }
