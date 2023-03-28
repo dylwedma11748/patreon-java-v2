@@ -4,13 +4,15 @@ import java.util.Collection;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.jasminb.jsonapi.RelType;
 import com.github.jasminb.jsonapi.annotations.Relationship;
 import com.github.jasminb.jsonapi.annotations.Type;
 
 import patreon.java.v2.resources.shared.BaseResource;
 import patreon.java.v2.resources.shared.Field;
 
+/**
+ * The creator's page, and the top-level object for accessing lists of members, tiers, etc.
+ */
 @Type("campaign")
 public class Campaign extends BaseResource {
 
@@ -69,16 +71,23 @@ public class Campaign extends BaseResource {
 	private String url;
 	private String vanity;
 
-	@Relationship("benefits")
+	// Currently a dead end
+	@Relationship(value = "benefits", resolve = true)
 	private List<Benefit> benefits;
 
-	@Relationship(value = "creator", resolve = true, relType = RelType.RELATED)
-	private User creator;
+	// 
+	// Related link for creator returns a classic 404, not sure what to do here yet.
+	
+	// @Relationship(value = "creator", resolve = true, relType = RelType.RELATED)
+	// private User creator;
+	
+	// @JsonProperty("creator") User creator, <- For the constructor
 
+	// Untested
 	@Relationship("goals")
 	private List<Goal> goals;
 
-	@Relationship("tiers")
+	@Relationship(value = "tiers", resolve = true)
 	private List<Tier> tiers;
 
 	public Campaign(@JsonProperty("created_at") String createdAt, @JsonProperty("creation_name") String creationName,
@@ -97,8 +106,7 @@ public class Campaign extends BaseResource {
 			@JsonProperty("thanks_embed") String thanksEmbed, @JsonProperty("thanks_msg") String thanksMsg,
 			@JsonProperty("thanks_video_url") String thanksVideoURL, @JsonProperty("url") String url,
 			@JsonProperty("vanity") String vanity, @JsonProperty("benefits") List<Benefit> benefits,
-			@JsonProperty("creator") User creator, @JsonProperty("goals") List<Goal> goals,
-			@JsonProperty("tiers") List<Tier> tiers) {
+			@JsonProperty("goals") List<Goal> goals, @JsonProperty("tiers") List<Tier> tiers) {
 		this.createdAt = createdAt;
 		this.creationName = creationName;
 		this.discordServerID = discordServerID;
@@ -127,253 +135,296 @@ public class Campaign extends BaseResource {
 		this.url = url;
 		this.vanity = vanity;
 		this.benefits = benefits;
-		this.creator = creator;
+		//this.creator = creator;
 		this.goals = goals;
 		this.tiers = tiers;
 	}
 
 	/**
-     * Returns the date and time that the creator first began the campaign creation process.
-     * @return     the date and time that the campaign was first created. (UTC ISO format)
-     * @see    #Campaign.getPublishedAt()
-     */
+	 * Returns the date and time that the creator first began the campaign creation
+	 * process.
+	 * 
+	 * @return the date and time that the campaign was first created. (UTC ISO
+	 *         format)
+	 * @see #Campaign.getPublishedAt()
+	 */
 	public String getCreatedAt() {
 		return createdAt;
 	}
 
 	/**
-     * Returns the type of content the creator is creating, as in "creator is creating ...". Can be null.
-     * @return     the type of content the creator is creating
-     */
+	 * Returns the type of content the creator is creating, as in "creator is
+	 * creating ...". Can be null.
+	 * 
+	 * @return the type of content the creator is creating
+	 */
 	public String getCreationName() {
 		return creationName;
 	}
 
 	/**
-     * Returns the ID of the external Discord server that is linked to this campaign. Can be null.
-     * @return     the Discord server ID or null
-     */
+	 * Returns the ID of the external Discord server that is linked to this
+	 * campaign. Can be null.
+	 * 
+	 * @return the Discord server ID or null
+	 */
 	public String getDiscordServerID() {
 		return discordServerID;
 	}
 
 	/**
-     * Returns the ID of the Google Analytics tracker that the creator wants metrics to be sent to. Can be null.
-     * @return     the Google Analytics ID or null
-     */
+	 * Returns the ID of the Google Analytics tracker that the creator wants metrics
+	 * to be sent to. Can be null.
+	 * 
+	 * @return the Google Analytics ID or null
+	 */
 	public String getGoogleAnalyticsID() {
 		return googleAnalyticsID;
 	}
 
 	/**
-     * Returns whether this user has opted-in to RSS feeds.
-     * @return     true or false
-     */
+	 * Returns whether this user has opted-in to RSS feeds.
+	 * 
+	 * @return true or false
+	 */
 	public boolean hasRSS() {
 		return hasRSS;
 	}
 
 	/**
-     * Returns whether or not the creator has sent a one-time RSS notification email.
-     * @return     true or false
-     */
+	 * Returns whether or not the creator has sent a one-time RSS notification
+	 * email.
+	 * 
+	 * @return true or false
+	 */
 	public boolean hasSentRSSNotify() {
 		return hasSentRSSNotify;
 	}
 
 	/**
-     * Returns the URL for the campaign's profile image.
-     * @return     the campaign's profile image URL
-     */
+	 * Returns the URL for the campaign's profile image.
+	 * 
+	 * @return the campaign's profile image URL
+	 */
 	public String getImageSmallURL() {
 		return imageSmallURL;
 	}
 
 	/**
-     * Returns the banner image URL for the campaign.
-     * @return     the campaign's banner image URL
-     */
+	 * Returns the banner image URL for the campaign.
+	 * 
+	 * @return the campaign's banner image URL
+	 */
 	public String getImageURL() {
 		return imageURL;
 	}
 
 	/**
-     * Returns whether the campaign charges upfront. Can be null.
-     * @return     true if the campaign charges upfront, false otherwise
-     */
+	 * Returns whether the campaign charges upfront. Can be null.
+	 * 
+	 * @return true if the campaign charges upfront, false otherwise
+	 */
 	public boolean isChargedImmediately() {
 		return isChargedImmediately;
 	}
 
 	/**
-     * Returns whether the campaign charges per month.
-     * @return     true if the campaign charges per month, false if the campaign charges per-post
-     */
+	 * Returns whether the campaign charges per month.
+	 * 
+	 * @return true if the campaign charges per month, false if the campaign charges
+	 *         per-post
+	 */
 	public boolean isMonthly() {
 		return isMonthly;
 	}
 
 	/**
-     * Returns whether if the creator has marked the campaign as containing NSFW content.
-     * @return     true if the creator has marked the campaign as containing NSFW content.
-     */
+	 * Returns whether if the creator has marked the campaign as containing NSFW
+	 * content.
+	 * 
+	 * @return true if the creator has marked the campaign as containing NSFW
+	 *         content.
+	 */
 	public boolean isNSFW() {
 		return isNSFW;
 	}
 
 	/**
-     * Can be null. (That's all it says in Patreon's API docs. Blame them, not me.)
-     */
+	 * Can be null. (That's all it says in Patreon's API docs. Blame them, not me.)
+	 */
 	public String getMainVideoEmbed() {
 		return mainVideoEmbed;
 	}
 
 	/**
-     * Can be null. (That's all it says in Patreon's API docs. Blame them, not me.)
-     */
+	 * Can be null. (That's all it says in Patreon's API docs. Blame them, not me.)
+	 */
 	public String getMainVideoURL() {
 		return mainVideoURL;
 	}
 
 	/**
-     * Returns the pithy one-liner for this campaign, displayed on the creator page. Can be null.
-     * @return     one-liner for this campaign or null
-     */
+	 * Returns the pithy one-liner for this campaign, displayed on the creator page.
+	 * Can be null.
+	 * 
+	 * @return one-liner for this campaign or null
+	 */
 	public String getOneLiner() {
 		return oneLiner;
 	}
 
 	/**
-     * Returns the number of patrons pledging to this creator.
-     * @return     the number of patrons
-     */
+	 * Returns the number of patrons pledging to this creator.
+	 * 
+	 * @return the number of patrons
+	 */
 	public int getPatronCount() {
 		return patronCount;
 	}
 
 	/**
-     * Returns the thing which patrons are paying per, as in "Creator is making $1000 per ...". Can be null.
-     * @return     the thing or null
-     */
+	 * Returns the thing which patrons are paying per, as in "Creator is making
+	 * $1000 per ...". Can be null.
+	 * 
+	 * @return the thing or null
+	 */
 	public String getPayPerName() {
 		return payPerName;
 	}
 
 	/**
-     * Returns the relative (to patreon.com) URL for the pledge checkout flow for this campaign.
-     * @return     the relative URL for the pledge checkout flow
-     */
+	 * Returns the relative (to patreon.com) URL for the pledge checkout flow for
+	 * this campaign.
+	 * 
+	 * @return the relative URL for the pledge checkout flow
+	 */
 	public String getPledgeURL() {
 		return pledgeURL;
 	}
 
 	/**
-     * Returns the date and time that the creator most recently published (made publicly visible) the campaign. Can be null.
-     * @return     the most recent date and time or null. (UTC ISO format)
-     */
+	 * Returns the date and time that the creator most recently published (made
+	 * publicly visible) the campaign. Can be null.
+	 * 
+	 * @return the most recent date and time or null. (UTC ISO format)
+	 */
 	public String getPublishedAt() {
 		return publishedAt;
 	}
 
 	/**
-     * Returns the URL for the RSS album artwork. Can be null.
-     * @return     the URL for the RSS album artwork or null.
-     */
+	 * Returns the URL for the RSS album artwork. Can be null.
+	 * 
+	 * @return the URL for the RSS album artwork or null.
+	 */
 	public String getRssArtworkURL() {
 		return rssArtworkURL;
 	}
 
 	/**
-     * Returns the title of the campaign's RSS feed.
-     * @return     the title of the campaign's RSS feed.
-     */
+	 * Returns the title of the campaign's RSS feed.
+	 * 
+	 * @return the title of the campaign's RSS feed.
+	 */
 	public String getRssFeedTitle() {
 		return rssFeedTitle;
 	}
 
 	/**
-     * Returns whether the campaign's total earnings are shown publicly.
-     * @return     true if campaign's earnings are public, false otherwise
-     */
+	 * Returns whether the campaign's total earnings are shown publicly.
+	 * 
+	 * @return true if campaign's earnings are public, false otherwise
+	 */
 	public boolean isShowEarnings() {
 		return showEarnings;
 	}
 
 	/**
-     * Returns the creator's summary of their campaign. Can be null.
-     * @return     the creator's summary or null
-     */
+	 * Returns the creator's summary of their campaign. Can be null.
+	 * 
+	 * @return the creator's summary or null
+	 */
 	public String getSummary() {
 		return summary;
 	}
 
 	/**
-     * Can be null. (That's all it says in Patreon's API docs. Blame them, not me.)
-     */
+	 * Can be null. (That's all it says in Patreon's API docs. Blame them, not me.)
+	 */
 	public String getThanksEmbed() {
 		return thanksEmbed;
 	}
 
 	/**
-     * Returns the thank you message shown to patrons after they pledge to this campaign. Can be null.
-     * @return     the thank you message or null
-     */
+	 * Returns the thank you message shown to patrons after they pledge to this
+	 * campaign. Can be null.
+	 * 
+	 * @return the thank you message or null
+	 */
 	public String getThanksMsg() {
 		return thanksMsg;
 	}
 
 	/**
-     * Returns the URL for the video shown to patrons after they pledge to this campaign. Can be null.
-     * @return     the video URL or null
-     */
+	 * Returns the URL for the video shown to patrons after they pledge to this
+	 * campaign. Can be null.
+	 * 
+	 * @return the video URL or null
+	 */
 	public String getThanksVideoURL() {
 		return thanksVideoURL;
 	}
 
 	/**
-     * Returns a URL to access this campaign on patreon.com
-     * @return     this campaign's URL
-     */
+	 * Returns a URL to access this campaign on patreon.com
+	 * 
+	 * @return this campaign's URL
+	 */
 	public String getURL() {
 		return url;
 	}
 
 	/**
-     * Returns the campaign's vanity. Can be null.
-     * @return     this campaign's vanity or null
-     */
+	 * Returns the campaign's vanity. Can be null.
+	 * 
+	 * @return this campaign's vanity or null
+	 */
 	public String getVanity() {
 		return vanity;
 	}
 
 	/**
-     * Returns the campaign's benefits.
-     * @return     the campaign's benefits
-     */
+	 * Returns the campaign's benefits. (Currently a dead end)
+	 * 
+	 * @return the campaign's benefits
+	 */
 	public List<Benefit> getBenefits() {
 		return benefits;
 	}
 
-	/**
-     * Returns the campaign owner.
-     * @return     the campaign owner
-     */
-	public User getCreator() {
-		return creator;
-	}
+//	/**
+//	 * Returns the campaign owner.
+//	 * 
+//	 * @return the campaign owner
+//	 */
+//	public User getCreator() {
+//		return creator;
+//	}
 
 	/**
-     * Returns the campaign's goals.
-     * @return     the campaign's goals.
-     */
+	 * Returns the campaign's goals. (Currently untested)
+	 * 
+	 * @return the campaign's goals.
+	 */
 	public List<Goal> getGoals() {
 		return goals;
 	}
 
 	/**
-     * Returns the campaign's tiers.
-     * @return     the campaign's tiers.
-     */
+	 * Returns the campaign's tiers.
+	 * 
+	 * @return the campaign's tiers.
+	 */
 	public List<Tier> getTiers() {
 		return tiers;
 	}

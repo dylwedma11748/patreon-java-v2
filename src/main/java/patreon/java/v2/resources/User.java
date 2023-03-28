@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.github.jasminb.jsonapi.RelType;
 import com.github.jasminb.jsonapi.annotations.Relationship;
 import com.github.jasminb.jsonapi.annotations.Type;
 
@@ -55,9 +56,10 @@ public class User extends BaseResource {
 	private String url;
 	private String vanity;
 
-	@Relationship("campaign")
+	@Relationship(value = "campaign", resolve = true, relType = RelType.RELATED)
 	private Campaign campaign;
 
+	// Untested
 	@Relationship("memberships")
 	private List<Member> memberships;
 
@@ -220,7 +222,7 @@ public class User extends BaseResource {
 	}
 
 	/**
-     * Returns memberships to ALL campaigns the user is a member of.
+     * Returns memberships to ALL campaigns the user is a member of. (Currently untested)
      * @return     memberships to the campaigns the user is a member of.
      */
 	public List<Member> getMemberships() {

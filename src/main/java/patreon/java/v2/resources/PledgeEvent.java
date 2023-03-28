@@ -4,13 +4,17 @@ import java.util.Collection;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import com.github.jasminb.jsonapi.annotations.Relationship;
 import com.github.jasminb.jsonapi.annotations.Type;
 
 import patreon.java.v2.resources.shared.BaseResource;
 import patreon.java.v2.resources.shared.Field;
 
-@Type("pledge_event")
+/**
+ * The record of a pledging action taken by the user, or that action's failure.
+ */
+@Type("pledge-event")
 public class PledgeEvent extends BaseResource {
 
 	public enum PledgeEventField implements Field {
@@ -33,38 +37,133 @@ public class PledgeEvent extends BaseResource {
 		}
 	}
 
-	public int amount_cents;
-	public String currency_code;
-	public String date;
-	public String payment_status;
-	public String tier_id;
-	public String tier_title;
-	public String type;
+	private int amountCents;
+	private String currencyCode;
+	private String date;
+	private String paymentStatus;
+	private String tierId;
+	private String tierTitle;
+	private String type;
 
-	@Relationship("campaign")
+	// Currently a dead end
+	@Relationship(value = "campaign", resolve = true)
 	private Campaign campaign;
 
-	@Relationship("patron")
+	// Currently a dead end
+	@Relationship(value = "patron", resolve = true)
 	private User patron;
 
-	@Relationship("tier")
+	// Currently a dead end
+	@Relationship(value = "tier", resolve = true)
 	private Tier tier;
 
-	public PledgeEvent(@JsonProperty("amount_cents") int amount_cents,
-			@JsonProperty("currency_code") String currency_code, @JsonProperty("date") String date,
-			@JsonProperty("payment_status") String payment_status, @JsonProperty("tier_id") String tier_id,
-			@JsonProperty("tier_title") String tier_title, @JsonProperty("type") String type,
+	public PledgeEvent(@JsonProperty("amount_cents") int amountCents,
+			@JsonProperty("currency_code") String currencyCode, @JsonProperty("date") String date,
+			@JsonProperty("payment_status") String paymentStatus, @JsonProperty("tier_id") String tierId,
+			@JsonProperty("tier_title") String tierTitle, @JsonProperty("type") String type,
 			@JsonProperty("campaign") Campaign campaign, @JsonProperty("patron") User patron,
 			@JsonProperty("tier") Tier tier) {
-		this.amount_cents = amount_cents;
-		this.currency_code = currency_code;
+		this.amountCents = amountCents;
+		this.currencyCode = currencyCode;
 		this.date = date;
-		this.payment_status = payment_status;
-		this.tier_id = tier_id;
-		this.tier_title = tier_title;
+		this.paymentStatus = paymentStatus;
+		this.tierId = tierId;
+		this.tierTitle = tierTitle;
 		this.type = type;
 		this.campaign = campaign;
 		this.patron = patron;
 		this.tier = tier;
+	}
+
+	/**
+	 * Returns the amount (in the currency in which the patron paid) of the
+	 * underlying event.
+	 * 
+	 * @return the amount of the underlying event
+	 */
+	public int getAmountCents() {
+		return amountCents;
+	}
+
+	/**
+	 * Returns the ISO code of the currency of the event.
+	 * 
+	 * @return the ISO code of the event
+	 */
+	public String getCurrencyCode() {
+		return currencyCode;
+	}
+
+	/**
+	 * Returns the date and time that this event occurred.
+	 * 
+	 * @return the date and time that this event occurred (UTC ISO format)
+	 */
+	public String getDate() {
+		return date;
+	}
+
+	/**
+	 * Returns the status of the underlying payment.
+	 * 
+	 * @return one of Paid, Declined, Deleted, Pending, Refunded, Fraud, Other
+	 */
+	public String getPaymentStatus() {
+		return paymentStatus;
+	}
+
+	/**
+	 * Returns the ID of the tier associated with the pledge. Can be null.
+	 * 
+	 * @return the tier ID or null
+	 */
+	public String getTierId() {
+		return tierId;
+	}
+
+	/**
+	 * Returns the ID of the tier associated with the pledge. Can be null.
+	 * 
+	 * @return the tier ID or null
+	 */
+	public String getTierTitle() {
+		return tierTitle;
+	}
+
+	/**
+	 * Returns the event type
+	 * 
+	 * @return one of pledge_start, pledge_upgrade, pledge_downgrade, pledge_delete,
+	 *         subscription
+	 */
+	public String getType() {
+		return type;
+	}
+
+	/**
+	 * Returns the campaign being pledged to. (Currently a dead end)
+	 * 
+	 * @return the campaign being pledged to
+	 */
+	public Campaign getCampaign() {
+		return campaign;
+	}
+
+	/**
+	 * Returns the pledging user. (Currently a dead end)
+	 * 
+	 * @return the pledging user
+	 */
+	public User getPatron() {
+		return patron;
+	}
+
+	/**
+	 * Returns the tier associated with this pledge event. (Currently a dead end)
+	 * 
+	 * @return the associated tier
+	 */
+	public Tier getTier() {
+		return tier;
 	}
 }
