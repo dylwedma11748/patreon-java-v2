@@ -12,43 +12,37 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 class MetaDeserializer extends JsonDeserializer<PaginationMeta> {
-	
-    @Override
-    public PaginationMeta deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
-        ObjectCodec codec = jp.getCodec();
-        JsonNode node = codec.readTree(jp);
-        String nextCursor = node.get("pagination").get("cursors").get("next").asText();
-        int total = node.get("pagination").get("total").asInt();
-        return new PaginationMeta(nextCursor, total);
-    }
+
+	@Override
+	public PaginationMeta deserialize(JsonParser jp, DeserializationContext ctxt)
+			throws IOException, JsonProcessingException {
+		ObjectCodec codec = jp.getCodec();
+		JsonNode node = codec.readTree(jp);
+		String nextCursor = node.get("pagination").get("cursors").get("next").asText();
+		int total = node.get("pagination").get("total").asInt();
+		return new PaginationMeta(nextCursor, total);
+	}
 }
 
 @JsonDeserialize(using = MetaDeserializer.class)
 public class PaginationMeta {
-	
+
 	private String nextCursor;
-    private int total;
-    
-    public PaginationMeta() {}
-    
-    public PaginationMeta(@JsonProperty("next") String nextCursor, @JsonProperty("total") int total) {
-    	this.nextCursor = nextCursor;
-    	this.total = total;
-    }
+	private int total;
 
-    public String getNextCursor() {
-        return nextCursor;
-    }
+	public PaginationMeta() {
+	}
 
-    public void setNextCursor(String nextCursor) {
-        this.nextCursor = nextCursor;
-    }
+	public PaginationMeta(@JsonProperty("next") String nextCursor, @JsonProperty("total") int total) {
+		this.nextCursor = nextCursor;
+		this.total = total;
+	}
 
-    public int getTotal() {
-        return total;
-    }
+	public String getNextCursor() {
+		return nextCursor;
+	}
 
-    public void setTotal(int total) {
-        this.total = total;
-    }
+	public int getTotal() {
+		return total;
+	}
 }
