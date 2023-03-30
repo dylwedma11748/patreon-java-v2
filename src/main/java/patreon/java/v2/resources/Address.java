@@ -15,8 +15,8 @@ import patreon.java.v2.resources.shared.Field;
 public class Address extends BaseResource {
 	
 	public enum AddressField implements Field {
-		Addressee("addressee"), City("city"), Country("country"), Created_At("created_at"), Line_1("line_1"),
-		Line_2("line_2"), Phone_Number("phone_number"), Postal_Code("postal_code"), State("state");
+		addressee("addressee"), city("city"), country("country"), created_at("created_at"), line_1("line_1"),
+		line_2("line_2"), phone_number("phone_number"), postal_code("postal_code"), state("state");
 
 		private final String propertyName;
 

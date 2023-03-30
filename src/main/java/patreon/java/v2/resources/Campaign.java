@@ -11,21 +11,71 @@ import patreon.java.v2.resources.shared.BaseResource;
 import patreon.java.v2.resources.shared.Field;
 
 /**
- * The creator's page, and the top-level object for accessing lists of members, tiers, etc.
+ * The creator's page, and the top-level object for accessing lists of members,
+ * tiers, etc.
  */
 @Type("campaign")
 public class Campaign extends BaseResource {
 
+	/**
+	 * This enum represents the different fields or properties associated with the
+	 * Campaign resource.
+	 */
 	public enum CampaignField implements Field {
-		Created_At("created_at"), Creation_Name("creation_name"), Discord_Server_ID("discord_server_id"),
-		Google_Analytics_ID("google_analytics_id"), Has_RSS("has_rss"), Has_Sent_RSS_Notify("has_sent_rss_notify"),
-		Image_Small_Url("image_small_url"), Image_Url("image_url"), Is_Charged_Immediately("is_charged_immediately"),
-		Is_Monthly("is_monthly"), Is_NSFW("is_nsfw"), Main_Video_Embed("main_video_embed"),
-		Main_Video_URL("main_video_url"), One_Liner("one_liner"), Patron_Count("patron_count"),
-		Pay_Per_Name("pay_per_name"), Pledge_Url("pledge_url"), Published_At("published_at"),
-		RSS_Artwork_URL("rss_artwork_url"), RSS_Feed_Title("rss_feed_title"), Show_Earnings("show_earnings"),
-		Summary("summary"), Thanks_Embed("thanks_embed"), Thanks_Msg("thanks_msg"),
-		Thanks_Video_URL("thanks_video_url"), URL("url"), Vanity("vanity");
+		/** The date and time the campaign was created. */
+		created_at("created_at"),
+		/** The name of the creation associated with the campaign. */
+		creation_name("creation_name"),
+		/** The ID of the Discord server associated with the campaign. */
+		discord_server_id("discord_server_id"),
+		/** The Google Analytics ID associated with the campaign. */
+		google_analytics_id("google_analytics_id"),
+		/** Whether the campaign has an RSS feed. */
+		has_rss("has_rss"),
+		/** Whether an RSS notification has been sent for the campaign. */
+		has_sent_rss_notify("has_sent_rss_notify"),
+		/** The URL for the small version of the campaign's image. */
+		image_small_url("image_small_url"),
+		/** The URL for the campaign's image. */
+		image_url("image_url"),
+		/** Whether patrons are charged immediately upon pledging. */
+		is_charged_immediately("is_charged_immediately"),
+		/** Whether the campaign is a monthly campaign. */
+		is_monthly("is_monthly"),
+		/** Whether the campaign contains NSFW content. */
+		is_nsfw("is_nsfw"),
+		/** The main video embedded in the campaign page. */
+		main_video_embed("main_video_embed"),
+		/** The URL for the main video associated with the campaign. */
+		main_video_url("main_video_url"),
+		/** The campaign's one-liner description. */
+		one_liner("one_liner"),
+		/** The number of patrons currently supporting the campaign. */
+		patron_count("patron_count"),
+		/** The pay-per-name associated with the campaign. */
+		pay_per_name("pay_per_name"),
+		/** The URL for the campaign's pledge page. */
+		pledge_url("pledge_url"),
+		/** The date and time the campaign was published. */
+		published_at("published_at"),
+		/** The artwork URL for the RSS feed. */
+		rss_artwork_url("rss_artwork_url"),
+		/** The title of the RSS feed. */
+		rss_feed_title("rss_feed_title"),
+		/** Whether the campaign earnings are shown publicly. */
+		show_earnings("show_earnings"),
+		/** The summary of the campaign. */
+		summary("summary"),
+		/** The video embedded in the "thank you" message to patrons. */
+		thanks_embed("thanks_embed"),
+		/** The "thank you" message to patrons. */
+		thanks_msg("thanks_msg"),
+		/** The URL for the "thank you" video to patrons. */
+		thanks_video_url("thanks_video_url"),
+		/** The URL for the campaign page. */
+		url("url"),
+		/** The campaign's vanity name. */
+		vanity("vanity");
 
 		private final String propertyName;
 
@@ -33,6 +83,11 @@ public class Campaign extends BaseResource {
 			this.propertyName = propertyName;
 		}
 
+		/**
+		 * Returns a collection of all available fields for the Campaign resource.
+		 * 
+		 * @return a collection of Campaign fields
+		 */
 		public static Collection<CampaignField> getAllFields() {
 			return List.of(values());
 		}
@@ -71,16 +126,14 @@ public class Campaign extends BaseResource {
 	private String url;
 	private String vanity;
 
-	// Currently a dead end
 	@Relationship(value = "benefits", resolve = true)
 	private List<Benefit> benefits;
 
-	// 
 	// Related link for creator returns a classic 404, not sure what to do here yet.
-	
+
 	// @Relationship(value = "creator", resolve = true, relType = RelType.RELATED)
 	// private User creator;
-	
+
 	// @JsonProperty("creator") User creator, <- For the constructor
 
 	// Untested
@@ -135,7 +188,6 @@ public class Campaign extends BaseResource {
 		this.url = url;
 		this.vanity = vanity;
 		this.benefits = benefits;
-		//this.creator = creator;
 		this.goals = goals;
 		this.tiers = tiers;
 	}
@@ -146,7 +198,8 @@ public class Campaign extends BaseResource {
 	 * 
 	 * @return the date and time that the campaign was first created. (UTC ISO
 	 *         format)
-	 * @see #Campaign.getPublishedAt()
+	 * 
+	 * @see Campaign#getPublishedAt()
 	 */
 	public String getCreatedAt() {
 		return createdAt;
@@ -250,14 +303,19 @@ public class Campaign extends BaseResource {
 	}
 
 	/**
-	 * Can be null. (That's all it says in Patreon's API docs. Blame them, not me.)
+	 * Returns the main video embedded in the campaign page. Can be null.
+	 * 
+	 * @return a String containing something or null (the API docs don't say
+	 *         anything)
 	 */
 	public String getMainVideoEmbed() {
 		return mainVideoEmbed;
 	}
 
 	/**
-	 * Can be null. (That's all it says in Patreon's API docs. Blame them, not me.)
+	 * Returns the URL for the main video associated with the campaign.
+	 * 
+	 * @return the URL for the main video associated with the campaign.
 	 */
 	public String getMainVideoURL() {
 		return mainVideoURL;
@@ -349,7 +407,9 @@ public class Campaign extends BaseResource {
 	}
 
 	/**
-	 * Can be null. (That's all it says in Patreon's API docs. Blame them, not me.)
+	 * Returns the main video embedded in the campaign page. Can be null.
+	 * 
+	 * @return a String containing something or null (the docs don't say anything)
 	 */
 	public String getThanksEmbed() {
 		return thanksEmbed;
@@ -385,7 +445,8 @@ public class Campaign extends BaseResource {
 	}
 
 	/**
-	 * Returns the campaign's vanity. Can be null.
+	 * Returns the public "username" of the campaign's creator. patreon.com/ goes to
+	 * this user's creator page. Can be null.
 	 * 
 	 * @return this campaign's vanity or null
 	 */
@@ -394,7 +455,7 @@ public class Campaign extends BaseResource {
 	}
 
 	/**
-	 * Returns the campaign's benefits. (Currently a dead end)
+	 * Returns the campaign's benefits.
 	 * 
 	 * @return the campaign's benefits
 	 */
@@ -414,7 +475,7 @@ public class Campaign extends BaseResource {
 	/**
 	 * Returns the campaign's goals. (Currently untested)
 	 * 
-	 * @return the campaign's goals.
+	 * @return the campaign's goals
 	 */
 	public List<Goal> getGoals() {
 		return goals;
@@ -423,7 +484,7 @@ public class Campaign extends BaseResource {
 	/**
 	 * Returns the campaign's tiers.
 	 * 
-	 * @return the campaign's tiers.
+	 * @return the campaign's tiers
 	 */
 	public List<Tier> getTiers() {
 		return tiers;

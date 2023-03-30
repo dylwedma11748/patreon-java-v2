@@ -14,7 +14,7 @@ import patreon.java.v2.resources.shared.Field;
 public class Deliverable extends BaseResource {
 
 	public enum DeliverableField implements Field {
-		Completed_At("completed_at"), Delivery_Status("delivery_status"), Due_At("due_at");
+		completed_at("completed_at"), delivery_status("delivery_status"), due_at("due_at");
 
 		private final String propertyName;
 

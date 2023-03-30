@@ -2,7 +2,11 @@ package patreon.java.v2.resources.shared;
 
 import java.util.List;
 
+/**
+ * A mapping from the user's connected app names to external user id on the respective app.
+ */
 public class SocialConnections {
+	
 	private UserIdObject youtube;
 	private UserIdObject twitter;
 	private UserIdObject deviantart;
@@ -55,5 +59,18 @@ public class SocialConnections {
 		public String getUrl() {
 			return url;
 		}
+
+		@Override
+		public String toString() {
+			return "UserIdObject [user_id=" + user_id + ", scopes=" + scopes + ", url=" + url + "]";
+		}
 	}
+
+	@Override
+	public String toString() {
+		return "SocialConnections [youtube=" + youtube + ", twitter=" + twitter + ", deviantart=" + deviantart
+				+ ", discord=" + discord + ", twitch=" + twitch + ", facebook=" + facebook + ", spotify=" + spotify
+				+ "]";
+	}
+
 }

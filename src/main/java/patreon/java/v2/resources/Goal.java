@@ -14,8 +14,8 @@ import patreon.java.v2.resources.shared.Field;
 public class Goal extends BaseResource {
 
 	public enum GoalField implements Field {
-		Amount_Cents("amount_cents"), Completed_Percentage("completed_percentage"), Created_At("created_at"),
-		Description("description"), Reached_At("reached_at"), Title("title");
+		amount_cents("amount_cents"), completed_percentage("completed_percentage"), created_at("created_at"),
+		description("description"), reached_at("reached_at"), title("title");
 
 		private final String propertyName;
 

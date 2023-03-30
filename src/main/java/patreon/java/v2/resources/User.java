@@ -18,11 +18,41 @@ import patreon.java.v2.resources.shared.SocialConnections;
 @Type("user")
 public class User extends BaseResource {
 
+	/**
+	 * This enum represents the different fields or properties associated with the
+	 * User resource.
+	 */
 	public enum UserField implements Field {
-		about("about"), can_see_nsfw("can_see_nsfw"), created("created"), email("email"), first_name("first_name"),
-		full_name("full_name"), hide_pledges("hide_pledges"), image_url("image_url"),
-		is_email_verified("is_email_verified"), last_name("last_name"), like_count("like_count"),
-		social_connections("social_connections"), thumb_url("thumb_url"), url("url"), vanity("vanity");
+		/** The user's "about" information. */
+		about("about"),
+		/** Whether the user can see NSFW content. */
+		can_see_nsfw("can_see_nsfw"),
+		/** The date and time the user was created. */
+		created("created"),
+		/** The user's email address. */
+		email("email"),
+		/** The user's first name. */
+		first_name("first_name"),
+		/** The user's full name. */
+		full_name("full_name"),
+		/** Whether the user has chosen to hide their pledges. */
+		hide_pledges("hide_pledges"),
+		/** The URL for the user's profile image. */
+		image_url("image_url"),
+		/** Whether the user's email address has been verified. */
+		is_email_verified("is_email_verified"),
+		/** The user's last name. */
+		last_name("last_name"),
+		/** The number of likes the user has received. */
+		like_count("like_count"),
+		/** The user's social connections. */
+		social_connections("social_connections"),
+		/** The URL for the user's profile thumbnail image. */
+		thumb_url("thumb_url"),
+		/** The URL for the user's profile page. */
+		url("url"),
+		/** The user's vanity name. */
+		vanity("vanity");
 
 		private final String propertyName;
 
@@ -30,6 +60,11 @@ public class User extends BaseResource {
 			this.propertyName = propertyName;
 		}
 
+		/**
+		 * Returns a collection of all available fields for the User resource.
+		 * 
+		 * @return a collection of User fields
+		 */
 		public static Collection<UserField> getAllFields() {
 			return List.of(values());
 		}
@@ -68,7 +103,8 @@ public class User extends BaseResource {
 			@JsonProperty("first_name") String firstName, @JsonProperty("full_name") String fullName,
 			@JsonProperty("hide_pledges") boolean hidePledges, @JsonProperty("image_url") String imageURL,
 			@JsonProperty("is_email_verified") boolean isEmailVerified, @JsonProperty("last_name") String lastName,
-			@JsonProperty("like_count") int likeCount, @JsonProperty("social_connections") SocialConnections socialConnections,
+			@JsonProperty("like_count") int likeCount,
+			@JsonProperty("social_connections") SocialConnections socialConnections,
 			@JsonProperty("thumb_url") String thumbURL, @JsonProperty("url") String url,
 			@JsonProperty("vanity") String vanity, @JsonProperty("campaign") Campaign campaign,
 			@JsonProperty("memberships") List<Member> memberships) {
@@ -92,139 +128,161 @@ public class User extends BaseResource {
 	}
 
 	/**
-     * Returns the user's about text, which appears on their profile. Can be null.
-     * @return     the user's about text or null.
-     */
+	 * Returns the user's about text, which appears on their profile. Can be null.
+	 * 
+	 * @return the user's about text or null.
+	 */
 	public String getAbout() {
 		return about;
 	}
 
 	/**
-     * Returns if this user can view NFSW content. Can be null.
-     * @return     true if this user can or null.
-     */
+	 * Returns if this user can view NFSW content. Can be null.
+	 * 
+	 * @return true if this user can or null.
+	 */
 	public boolean isCanSeeNSFW() {
 		return canSeeNSFW;
 	}
 
 	/**
-     * Returns date and time of this user's account creation.
-     * @return     date and time of this user's account creation. (UTC ISO format)
-     */
+	 * Returns date and time of this user's account creation.
+	 * 
+	 * @return date and time of this user's account creation. (UTC ISO format)
+	 */
 	public String getCreated() {
 		return created;
 	}
-	
+
 	/**
-     * Returns the user's email address.
-     * @return     the user's email address.
-     */
+	 * Returns the user's email address.
+	 * 
+	 * @return the user's email address.
+	 */
 	public String getEmail() {
 		return email;
 	}
-	
+
 	/**
-     * Returns the user's first name. Can be null.
-     * @return     the user's first name or null.
-     */
+	 * Returns the user's first name. Can be null.
+	 * 
+	 * @return the user's first name or null.
+	 */
 	public String getFirstName() {
 		return firstName;
 	}
 
 	/**
-     * Returns the user's combined first and last name.
-     * @return     the user's combined first and last name.
-     */
+	 * Returns the user's combined first and last name.
+	 * 
+	 * @return the user's combined first and last name.
+	 */
 	public String getFullName() {
 		return fullName;
 	}
 
 	/**
-     * Returns if the user has chosen to keep private which creators they pledge to. Can be null.
-     * @return     true if this user has or null.
-     */
+	 * Returns if the user has chosen to keep private which creators they pledge to.
+	 * Can be null.
+	 * 
+	 * @return true if this user has or null.
+	 */
 	public boolean isHidePledges() {
 		return hidePledges;
 	}
-	
+
 	/**
-     * Returns the user's profile picture URL, scaled to width 400px
-     * @return     the user's profile picture URL.
-     */
+	 * Returns the user's profile picture URL, scaled to width 400px
+	 * 
+	 * @return the user's profile picture URL.
+	 */
 	public String getImageURL() {
 		return imageURL;
 	}
 
 	/**
-     * Returns if the user has confirmed their email.
-     * @return     true if the user's email is confirmed.
-     */
+	 * Returns if the user has confirmed their email.
+	 * 
+	 * @return true if the user's email is confirmed.
+	 */
 	public boolean isEmailVerified() {
 		return isEmailVerified;
 	}
 
 	/**
-     * Returns the user's last name. Can be null.
-     * @return     the user's last name or null.
-     */
+	 * Returns the user's last name. Can be null.
+	 * 
+	 * @return the user's last name or null.
+	 */
 	public String getLastName() {
 		return lastName;
 	}
 
 	/**
-     * Returns how many posts this user has liked.
-     * @return     the user's last name or null.
-     */
+	 * Returns how many posts this user has liked.
+	 * 
+	 * @return the user's last name or null.
+	 */
 	public int getLikeCount() {
 		return likeCount;
 	}
 
 	/**
-     * Returns a mapping from user's connected app names to external user id on the respective app.
-     * @return     a mapping from user's connected app.
-     * @see    patreon.java.v2.resources.shared.SocialConnections
-     */
+	 * Returns a mapping from user's connected app names to external user id on the
+	 * respective app.
+	 * 
+	 * @return a mapping from user's connected apps.
+	 * @see patreon.java.v2.resources.shared.SocialConnections
+	 */
 	public SocialConnections getSocialConnections() {
 		return socialConnections;
 	}
 
 	/**
-     * Returns the user's profile picture URL, scaled to a square of size 100x100px.
-     * @return     the user's profile picture URL.
-     */
+	 * Returns the user's profile picture URL, scaled to a square of size 100x100px.
+	 * 
+	 * @return the user's profile picture URL.
+	 */
 	public String getThumbURL() {
 		return thumbURL;
 	}
 
 	/**
-     * Returns the URL of this user's creator or patron profile.
-     * @return     the URL of this user's profile.
-     */
+	 * Returns the URL of this user's creator or patron profile.
+	 * 
+	 * @return the URL of this user's profile.
+	 */
 	public String getURL() {
 		return url;
 	}
 
 	/**
-     * The public "username" of the user. patreon.com/ goes to this user's creator page. Non-creator users might not have a vanity.
-     * @return     The public "username" of the user.
-     * @deprecated Use {@link Campaign#getVanity()} instead.
-     */
+	 * Returns the public "username" of the user. patreon.com/ goes to this user's
+	 * creator page. Non-creator users might not have a vanity.
+	 * 
+	 * @return The public "username" of the user.
+	 * 
+	 * @deprecated Use {@link Campaign#getVanity()} instead.
+	 */
 	public String getVanity() {
 		return vanity;
 	}
 
 	/**
-     * Returns information about the user’s Campaign.
-     * @return     the user’s Campaign.
-     */
+	 * Returns information about the user’s Campaign.
+	 * 
+	 * @return the user’s Campaign.
+	 */
 	public Campaign getCampaign() {
 		return campaign;
 	}
 
 	/**
-     * Returns memberships to ALL campaigns the user is a member of. (Currently untested)
-     * @return     memberships to the campaigns the user is a member of.
-     */
+	 * Returns memberships to ALL campaigns the user is a member of. (Currently
+	 * untested)
+	 * 
+	 * @return memberships to the campaigns the user is a member of.
+	 */
 	public List<Member> getMemberships() {
 		return memberships;
 	}

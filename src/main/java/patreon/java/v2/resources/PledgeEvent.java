@@ -17,24 +17,59 @@ import patreon.java.v2.resources.shared.Field;
 @Type("pledge-event")
 public class PledgeEvent extends BaseResource {
 
+	/**
+	 * This enum represents the different fields or properties associated with the
+	 * PledgeEvent resource.
+	 */
 	public enum PledgeEventField implements Field {
-		amount_cents("amount_cents"), currency_code("currency_code"), date("date"), payment_status("payment_status"),
-		tier_id("tier_id"), tier_title("tier_title"), type("type");
+	    /**
+	     * The amount of the pledge event in cents.
+	     */
+	    amount_cents("amount_cents"),
+	    /**
+	     * The currency code for the pledge event.
+	     */
+	    currency_code("currency_code"),
+	    /**
+	     * The date and time of the pledge event.
+	     */
+	    date("date"),
+	    /**
+	     * The payment status of the pledge event.
+	     */
+	    payment_status("payment_status"),
+	    /**
+	     * The ID of the tier associated with the pledge event.
+	     */
+	    tier_id("tier_id"),
+	    /**
+	     * The title of the tier associated with the pledge event.
+	     */
+	    tier_title("tier_title"),
+	    /**
+	     * The type of the pledge event.
+	     */
+	    type("type");
 
-		private final String propertyName;
+	    private final String propertyName;
 
-		PledgeEventField(String propertyName) {
-			this.propertyName = propertyName;
-		}
+	    PledgeEventField(String propertyName) {
+	        this.propertyName = propertyName;
+	    }
 
-		public static Collection<PledgeEventField> getAllFields() {
-			return List.of(values());
-		}
+	    /**
+	     * Returns a collection containing all fields.
+	     *
+	     * @return a collection containing all fields
+	     */
+	    public static Collection<PledgeEventField> getAllFields() {
+	        return List.of(values());
+	    }
 
-		@Override
-		public String getPropertyName() {
-			return this.propertyName;
-		}
+	    @Override
+	    public String getPropertyName() {
+	        return this.propertyName;
+	    }
 	}
 
 	private int amountCents;

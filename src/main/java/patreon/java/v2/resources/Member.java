@@ -12,18 +12,54 @@ import patreon.java.v2.resources.shared.BaseResource;
 import patreon.java.v2.resources.shared.Field;
 
 /**
- * The record of a user's membership to a campaign. Remains consistent across months of pledging.
+ * The record of a user's membership to a campaign. Remains consistent across
+ * months of pledging.
  */
 @Type("member")
 public class Member extends BaseResource {
 
+	/**
+	 * This enum represents the different fields or properties associated with the
+	 * Member resource.
+	 */
 	public enum MemberField implements Field {
-		Campaign_Lifetime_Support_Cents("campaign_lifetime_support_cents"),
-		Currently_Entitled_Amount_Cents("currently_entitled_amount_cents"), Email("email"), Full_Name("full_name"),
-		Is_Follower("is_follower"), Last_Charge_Date("last_charge_date"), Last_Charge_Status("last_charge_status"),
-		Lifetime_Support_Cents("lifetime_support_cents"), Next_Charge_Date("next_charge_date"), Note("note"),
-		Patron_Status("patron_status"), Pledge_Cadence("pledge_cadence"),
-		Pledge_Relationship_Start("pledge_relationship_start"), Will_Pay_Amount_Cents("will_pay_amount_cents");
+		/**
+		 * The total amount of lifetime support in cents that the member has given to
+		 * the creator.
+		 */
+		campaign_lifetime_support_cents("campaign_lifetime_support_cents"),
+		/**
+		 * The amount in cents that the member is entitled to pledge to the creator's
+		 * campaign.
+		 */
+		currently_entitled_amount_cents("currently_entitled_amount_cents"),
+		/** The email address associated with the member's Patreon account. */
+		email("email"),
+		/** The full name associated with the member's Patreon account. */
+		full_name("full_name"),
+		/** Whether the member is following the creator. */
+		is_follower("is_follower"),
+		/** The date of the last charge for the member's pledge. */
+		last_charge_date("last_charge_date"),
+		/** The status of the last charge for the member's pledge. */
+		last_charge_status("last_charge_status"),
+		/**
+		 * The total amount of lifetime support in cents that the member has given to
+		 * all creators.
+		 */
+		lifetime_support_cents("lifetime_support_cents"),
+		/** The date of the next expected charge for the member's pledge. */
+		next_charge_date("next_charge_date"),
+		/** A note associated with the member's pledge. */
+		note("note"),
+		/** The status of the member's Patreon pledge. */
+		patron_status("patron_status"),
+		/** The frequency of the member's pledge payments. */
+		pledge_cadence("pledge_cadence"),
+		/** The start date of the member's pledge. */
+		pledge_relationship_start("pledge_relationship_start"),
+		/** The amount in cents that the member has agreed to pay for their pledge. */
+		will_pay_amount_cents("will_pay_amount_cents");
 
 		private final String propertyName;
 
@@ -31,6 +67,11 @@ public class Member extends BaseResource {
 			this.propertyName = propertyName;
 		}
 
+		/**
+		 * Returns a collection of all available fields for the Member resource.
+		 * 
+		 * @return a collection of Member fields
+		 */
 		public static Collection<MemberField> getAllFields() {
 			return List.of(values());
 		}
@@ -57,16 +98,16 @@ public class Member extends BaseResource {
 	private int willPayAmountCents;
 
 	@Relationship("address")
-	public Address address;
+	private Address address;
 
 	@Relationship(value = "campaign", resolve = true, relType = RelType.RELATED)
-	public Campaign campaign;
+	private Campaign campaign;
 
 	@Relationship(value = "currently_entitled_tiers", resolve = true)
-	public List<Tier> currentlyEntitledTiers;
+	private List<Tier> currentlyEntitledTiers;
 
 	@Relationship(value = "pledge_history", resolve = true)
-	public List<PledgeEvent> pledgeHistory;
+	private List<PledgeEvent> pledgeHistory;
 
 	// Related link for user returns a classic 404, not sure what to do here yet.
 
@@ -110,9 +151,9 @@ public class Member extends BaseResource {
 
 	/**
 	 * Returns the total amount that the member has ever paid to the campaign in
-	 * campaign's currency. 0 if never paid.
+	 * campaign's currency. Zero if never paid.
 	 * 
-	 * @return the total amount or 0
+	 * @return the total amount or zero
 	 */
 	public int getCampaignLifetimeSupportCents() {
 		return campaignLifetimeSupportCents;
