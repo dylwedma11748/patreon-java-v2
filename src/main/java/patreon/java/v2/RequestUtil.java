@@ -1,4 +1,4 @@
-package patreon.java.v2.resources;
+package patreon.java.v2;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,6 +11,7 @@ import static patreon.java.v2.PatreonAPI.BASE_URI;
 public class RequestUtil {
 	public InputStream request(String pathSuffix, String accessToken) throws IOException {
 		URL url = buildUrl(pathSuffix);
+		System.out.println(url.toString());
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		connection.setRequestProperty("Authorization", "Bearer ".concat(accessToken));
 		connection.setRequestProperty("User-Agent", String.format("patreon-java-v2, version %s, platform %s %s",
