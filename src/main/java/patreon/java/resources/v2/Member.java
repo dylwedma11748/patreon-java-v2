@@ -1,4 +1,4 @@
-package patreon.java.v2.resources;
+package patreon.java.resources.v2;
 
 import java.util.Collection;
 import java.util.List;
@@ -8,8 +8,8 @@ import com.github.jasminb.jsonapi.RelType;
 import com.github.jasminb.jsonapi.annotations.Relationship;
 import com.github.jasminb.jsonapi.annotations.Type;
 
-import patreon.java.v2.resources.shared.BaseResource;
-import patreon.java.v2.resources.shared.Field;
+import patreon.java.resources.shared.BaseResource;
+import patreon.java.resources.shared.Field;
 
 /**
  * The record of a user's membership to a campaign. Remains consistent across
@@ -43,10 +43,7 @@ public class Member extends BaseResource {
 		last_charge_date("last_charge_date"),
 		/** The status of the last charge for the member's pledge. */
 		last_charge_status("last_charge_status"),
-		/**
-		 * The total amount of lifetime support in cents that the member has given to
-		 * all creators.
-		 */
+		/** The total amount that the member has ever paid to the campaign. */
 		lifetime_support_cents("lifetime_support_cents"),
 		/** The date of the next expected charge for the member's pledge. */
 		next_charge_date("next_charge_date"),
@@ -97,6 +94,7 @@ public class Member extends BaseResource {
 	private String pledgeRelationshipStart;
 	private int willPayAmountCents;
 
+	// Currently untested
 	@Relationship("address")
 	private Address address;
 
@@ -111,8 +109,8 @@ public class Member extends BaseResource {
 
 	// Related link for user returns a classic 404, not sure what to do here yet.
 
-	// @Relationship(value = "user", resolve = true, relType = RelType.RELATED)
-	// public User user;
+	@Relationship(value = "user", resolve = true, relType = RelType.RELATED)
+	public patreon.java.resources.v1.User user;
 
 	// @JsonProperty("creator") User user, <- For the constructor
 
@@ -128,7 +126,8 @@ public class Member extends BaseResource {
 			@JsonProperty("will_pay_amount_cents") int willPayAmountCents, @JsonProperty("address") Address address,
 			@JsonProperty("campaign") Campaign campaign,
 			@JsonProperty("currently_entitled_tiers") List<Tier> currentlyEntitledTiers,
-			@JsonProperty("pledge_history") List<PledgeEvent> pledgeHistory) {
+			@JsonProperty("pledge_history") List<PledgeEvent> pledgeHistory,
+			@JsonProperty("user") patreon.java.resources.v1.User user) {
 		this.campaignLifetimeSupportCents = campaignLifetimeSupportCents;
 		this.currentlyEntitledAmountCents = currentlyEntitledAmountCents;
 		this.email = email;
@@ -147,6 +146,7 @@ public class Member extends BaseResource {
 		this.campaign = campaign;
 		this.currentlyEntitledTiers = currentlyEntitledTiers;
 		this.pledgeHistory = pledgeHistory;
+		this.user = user;
 	}
 
 	/**
@@ -323,12 +323,13 @@ public class Member extends BaseResource {
 		return pledgeHistory;
 	}
 
-//	/**
-//	 * Returns the user who is pledging to the campaign.
-//	 * 
-//	 * @return the user who is pledging to the campaign
-//	 */
-//	public User getUser() {
-//		return user;
-//	}
+	/**
+	 * Returns the user who is pledging to the campaign. This uses V1 User in
+	 * substitution for V2 User because the related link returns a 404.
+	 * 
+	 * @return the user who is pledging to the campaign
+	 */
+	public patreon.java.resources.v1.User getUser() {
+		return user;
+	}
 }

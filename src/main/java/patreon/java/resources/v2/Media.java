@@ -1,4 +1,4 @@
-package patreon.java.v2.resources;
+package patreon.java.resources.v2;
 
 import java.util.Collection;
 import java.util.List;
@@ -6,8 +6,8 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.jasminb.jsonapi.annotations.Type;
 
-import patreon.java.v2.resources.shared.BaseResource;
-import patreon.java.v2.resources.shared.Field;
+import patreon.java.resources.shared.BaseResource;
+import patreon.java.resources.shared.Field;
 
 @Type("media")
 public class Media extends BaseResource {

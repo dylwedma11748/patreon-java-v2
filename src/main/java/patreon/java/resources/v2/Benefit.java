@@ -1,4 +1,4 @@
-package patreon.java.v2.resources;
+package patreon.java.resources.v2;
 
 import java.util.Collection;
 import java.util.List;
@@ -7,8 +7,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.jasminb.jsonapi.annotations.Relationship;
 import com.github.jasminb.jsonapi.annotations.Type;
 
-import patreon.java.v2.resources.shared.BaseResource;
-import patreon.java.v2.resources.shared.Field;
+import patreon.java.resources.shared.BaseResource;
+import patreon.java.resources.shared.Field;
 
 /**
  * A benefit added to the campaign, which can be added to a tier to be delivered
@@ -18,58 +18,60 @@ import patreon.java.v2.resources.shared.Field;
 public class Benefit extends BaseResource {
 
 	/**
-	 * This enum represents the different fields or properties associated with a Benefit resource.
+	 * This enum represents the different fields or properties associated with the
+	 * Benefit resource.
 	 */
 	public enum BenefitField implements Field {
-	    /** The external ID of the benefit in the application. */
-	    app_external_id("app_external_id"),
-	    /** The metadata associated with the benefit in the application. */
-	    app_meta("app_meta"),
-	    /** The type of the benefit. */
-	    benefit_type("benefit_type"),
-	    /** The date and time the benefit was created. */
-	    created_at("created_at"),
-	    /** The number of deliverables due today for the benefit. */
-	    deliverables_due_today_count("deliverables_due_today_count"),
-	    /** The number of delivered deliverables for the benefit. */
-	    delivered_deliverables_count("delivered_deliverables_count"),
-	    /** The description of the benefit. */
-	    description("description"),
-	    /** Whether the benefit has been deleted. */
-	    is_deleted("is_deleted"),
-	    /** Whether the benefit has ended. */
-	    is_ended("is_ended"),
-	    /** Whether the benefit has been published. */
-	    is_published("is_published"),
-	    /** The next due date of the deliverable for the benefit. */
-	    next_deliverable_due_date("next_deliverable_due_date"),
-	    /** The number of due deliverables for the benefit. */
-	    not_delivered_deliverables_count("not_delivered_deliverables_count"),
-	    /** The type of rule for the benefit. */
-	    rule_type("rule_type"),
-	    /** The number of tiers for the benefit. */
-	    tiers_count("tiers_count"),
-	    /** The title of the benefit. */
-	    title("title");
+		/** The external ID of the benefit in the application. */
+		app_external_id("app_external_id"),
+		/** The metadata associated with the benefit in the application. */
+		app_meta("app_meta"),
+		/** The type of the benefit. */
+		benefit_type("benefit_type"),
+		/** The date and time the benefit was created. */
+		created_at("created_at"),
+		/** The number of deliverables due today for the benefit. */
+		deliverables_due_today_count("deliverables_due_today_count"),
+		/** The number of delivered deliverables for the benefit. */
+		delivered_deliverables_count("delivered_deliverables_count"),
+		/** The description of the benefit. */
+		description("description"),
+		/** Whether the benefit has been deleted. */
+		is_deleted("is_deleted"),
+		/** Whether the benefit has ended. */
+		is_ended("is_ended"),
+		/** Whether the benefit has been published. */
+		is_published("is_published"),
+		/** The next due date of the deliverable for the benefit. */
+		next_deliverable_due_date("next_deliverable_due_date"),
+		/** The number of due deliverables for the benefit. */
+		not_delivered_deliverables_count("not_delivered_deliverables_count"),
+		/** The type of rule for the benefit. */
+		rule_type("rule_type"),
+		/** The number of tiers for the benefit. */
+		tiers_count("tiers_count"),
+		/** The title of the benefit. */
+		title("title");
 
-	    private final String propertyName;
+		private final String propertyName;
 
-	    BenefitField(String propertyName) {
-	        this.propertyName = propertyName;
-	    }
+		BenefitField(String propertyName) {
+			this.propertyName = propertyName;
+		}
 
-	    /**
-	     * Returns a collection of all available fields for the Benefit resource.
-	     * @return a collection of Benefit fields
-	     */
-	    public static Collection<BenefitField> getAllFields() {
-	        return List.of(values());
-	    }
+		/**
+		 * Returns a collection of all available fields for the Benefit resource.
+		 * 
+		 * @return a collection of Benefit fields
+		 */
+		public static Collection<BenefitField> getAllFields() {
+			return List.of(values());
+		}
 
-	    @Override
-	    public String getPropertyName() {
-	        return this.propertyName;
-	    }
+		@Override
+		public String getPropertyName() {
+			return this.propertyName;
+		}
 	}
 
 	private String appExternalId;
@@ -132,7 +134,8 @@ public class Benefit extends BaseResource {
 	}
 
 	/**
-	 * Returns the third-party external ID this reward is associated with, if any. Can be null.
+	 * Returns the third-party external ID this reward is associated with, if any.
+	 * Can be null.
 	 * 
 	 * @return the third-party external ID or null
 	 */
@@ -141,7 +144,8 @@ public class Benefit extends BaseResource {
 	}
 
 	/**
-	 * Returns any metadata the third-party application included with this benefit on creation. Can be null.
+	 * Returns any metadata the third-party application included with this benefit
+	 * on creation. Can be null.
 	 * 
 	 * @return the metadata created by the external application or null
 	 */
@@ -150,7 +154,8 @@ public class Benefit extends BaseResource {
 	}
 
 	/**
-	 * Returns the type of benefit, such as custom for creator-defined benefits. Can be null.
+	 * Returns the type of benefit, such as custom for creator-defined benefits. Can
+	 * be null.
 	 * 
 	 * @return the type of benefit or null
 	 */
@@ -168,7 +173,8 @@ public class Benefit extends BaseResource {
 	}
 
 	/**
-	 * Returns the number of deliverables for this benefit that are due today specifically.
+	 * Returns the number of deliverables for this benefit that are due today
+	 * specifically.
 	 * 
 	 * @return the number of deliverables due today
 	 */
@@ -177,7 +183,8 @@ public class Benefit extends BaseResource {
 	}
 
 	/**
-	 * Returns the number of deliverables for this benefit that have been marked complete.
+	 * Returns the number of deliverables for this benefit that have been marked
+	 * complete.
 	 * 
 	 * @return the number of completed deliverables
 	 */
@@ -231,7 +238,8 @@ public class Benefit extends BaseResource {
 	}
 
 	/**
-	 * Returns the number of deliverables for this benefit that are due, for all dates.
+	 * Returns the number of deliverables for this benefit that are due, for all
+	 * dates.
 	 * 
 	 * @return the number of all due deliverables
 	 */
@@ -240,7 +248,8 @@ public class Benefit extends BaseResource {
 	}
 
 	/**
-	 * Returns a rule type designation, such as eom_monthly or one_time_immediate. Can be null.
+	 * Returns a rule type designation, such as eom_monthly or one_time_immediate.
+	 * Can be null.
 	 * 
 	 * @return a rule type designation or null
 	 */
@@ -276,7 +285,8 @@ public class Benefit extends BaseResource {
 	}
 
 	/**
-	 * Returns the deliverables that have been generated by the Benefit (Currently a dead end)
+	 * Returns the deliverables that have been generated by the Benefit (Currently a
+	 * dead end)
 	 * 
 	 * @return the deliverables generated by the Benefit
 	 */

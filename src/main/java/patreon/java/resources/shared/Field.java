@@ -1,5 +1,8 @@
-package patreon.java.v2.resources.shared;
+package patreon.java.resources.shared;
 
+/**
+ * An interface representing a field or property in any of the resources.
+ */
 public interface Field {
 	/**
      * Returns the property name of the field.

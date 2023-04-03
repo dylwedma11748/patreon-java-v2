@@ -1,4 +1,4 @@
-package patreon.java.v2.resources;
+package patreon.java.resources.v2;
 
 import java.util.Collection;
 import java.util.List;
@@ -7,8 +7,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.jasminb.jsonapi.annotations.Relationship;
 import com.github.jasminb.jsonapi.annotations.Type;
 
-import patreon.java.v2.resources.shared.BaseResource;
-import patreon.java.v2.resources.shared.Field;
+import patreon.java.resources.shared.BaseResource;
+import patreon.java.resources.shared.Field;
 
 /**
  * A membership level on a campaign, which can have benefits attached to it.
@@ -17,7 +17,7 @@ import patreon.java.v2.resources.shared.Field;
 public class Tier extends BaseResource {
 
 	/**
-	 * This enum represents the different fields or properties associated with a
+	 * This enum represents the different fields or properties associated with the
 	 * Tier resource.
 	 */
 	public enum TierField implements Field {

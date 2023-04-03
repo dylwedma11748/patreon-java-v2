@@ -1,4 +1,4 @@
-package patreon.java.v2.resources;
+package patreon.java.resources.v2;
 
 import java.util.Collection;
 import java.util.List;
@@ -7,8 +7,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.jasminb.jsonapi.annotations.Relationship;
 import com.github.jasminb.jsonapi.annotations.Type;
 
-import patreon.java.v2.resources.shared.BaseResource;
-import patreon.java.v2.resources.shared.Field;
+import patreon.java.resources.shared.BaseResource;
+import patreon.java.resources.shared.Field;
 
 /**
  * The creator's page, and the top-level object for accessing lists of members,
@@ -129,14 +129,6 @@ public class Campaign extends BaseResource {
 	@Relationship(value = "benefits", resolve = true)
 	private List<Benefit> benefits;
 
-	// Related link for creator returns a classic 404, not sure what to do here yet.
-
-	// @Relationship(value = "creator", resolve = true, relType = RelType.RELATED)
-	// private User creator;
-
-	// @JsonProperty("creator") User creator, <- For the constructor
-
-	// Untested
 	@Relationship("goals")
 	private List<Goal> goals;
 
@@ -463,17 +455,8 @@ public class Campaign extends BaseResource {
 		return benefits;
 	}
 
-//	/**
-//	 * Returns the campaign owner.
-//	 * 
-//	 * @return the campaign owner
-//	 */
-//	public User getCreator() {
-//		return creator;
-//	}
-
 	/**
-	 * Returns the campaign's goals. (Currently untested)
+	 * Returns the campaign's goals.
 	 * 
 	 * @return the campaign's goals
 	 */

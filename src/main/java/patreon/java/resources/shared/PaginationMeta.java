@@ -1,4 +1,4 @@
-package patreon.java.v2.resources.shared;
+package patreon.java.resources.shared;
 
 import java.io.IOException;
 
@@ -23,7 +23,9 @@ class MetaDeserializer extends JsonDeserializer<PaginationMeta> {
 		return new PaginationMeta(nextCursor, total);
 	}
 }
-
+/**
+ * A class representing the pagination meta for some responses.
+ */
 @JsonDeserialize(using = MetaDeserializer.class)
 public class PaginationMeta {
 
@@ -38,10 +40,20 @@ public class PaginationMeta {
 		this.total = total;
 	}
 
+	/**
+	 * Returns the next cursor if it exists. Can be null.
+	 * 
+	 * @return the next cursor or null
+	 */
 	public String getNextCursor() {
 		return nextCursor;
 	}
 
+	/**
+	 * Returns the total if it exists. Can be null.
+	 * 
+	 * @return the total or null
+	 */
 	public int getTotal() {
 		return total;
 	}

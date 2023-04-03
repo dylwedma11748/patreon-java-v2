@@ -1,4 +1,4 @@
-package patreon.java.v2.resources;
+package patreon.java.resources.v2;
 
 import java.util.Collection;
 import java.util.List;
@@ -8,9 +8,9 @@ import com.github.jasminb.jsonapi.RelType;
 import com.github.jasminb.jsonapi.annotations.Relationship;
 import com.github.jasminb.jsonapi.annotations.Type;
 
-import patreon.java.v2.resources.shared.BaseResource;
-import patreon.java.v2.resources.shared.Field;
-import patreon.java.v2.resources.shared.SocialConnections;
+import patreon.java.resources.shared.BaseResource;
+import patreon.java.resources.shared.Field;
+import patreon.java.resources.shared.SocialConnections;
 
 /**
  * The Patreon user, which can be both patron and creator.
@@ -232,7 +232,7 @@ public class User extends BaseResource {
 	 * respective app.
 	 * 
 	 * @return a mapping from user's connected apps.
-	 * @see patreon.java.v2.resources.shared.SocialConnections
+	 * @see patreon.java.resources.shared.SocialConnections
 	 */
 	public SocialConnections getSocialConnections() {
 		return socialConnections;
