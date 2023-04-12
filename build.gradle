@@ -4,11 +4,13 @@
 
 plugins {
     id 'java'
+    id 'java-library'
     id 'maven-publish'
 }
 
 repositories {
     mavenLocal()
+    
     maven {
         url = uri('https://repo.maven.apache.org/maven2/')
     }
@@ -22,9 +24,15 @@ dependencies {
     implementation 'org.apache.httpcomponents:httpclient:4.2.3'
     implementation 'org.slf4j:slf4j-log4j12:1.7.2'
     implementation 'commons-io:commons-io:2.5'
-    implementation 'org.powermock:powermock-module-junit4:1.7.3'
-    implementation 'org.powermock:powermock-api-mockito:1.7.3'
-    implementation 'junit:junit:4.12'
+    
+    // Use JUnit Jupiter for testing.
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
+
+    // This dependency is exported to consumers, that is to say found on their compile classpath.
+    api 'org.apache.commons:commons-math3:3.6.1'
+
+    // This dependency is used internally, and not exposed to consumers on their own compile classpath.
+    implementation 'com.google.guava:guava:30.1.1-jre'
 }
 
 group = '7thousandnumbers'
@@ -37,4 +45,15 @@ publishing {
             from(components.java)
         }
     }
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(11)
+    }
+}
+
+tasks.named('test') {
+    // Use JUnit Platform for unit tests.
+    useJUnitPlatform()
 }
