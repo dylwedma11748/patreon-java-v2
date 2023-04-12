@@ -16,6 +16,11 @@ public class BaseResource {
 	@Links
 	private com.github.jasminb.jsonapi.Links links;
 
+	/**
+	 * Returns the unique ID for this resource. This is constant and doesn't change.
+	 * 
+	 * @return the class type or null
+	 */
 	public String getId() {
 		return id;
 	}
