@@ -1,9 +1,7 @@
 package patreon.java;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -17,74 +15,32 @@ import com.github.jasminb.jsonapi.DeserializationFeature;
 import com.github.jasminb.jsonapi.JSONAPIDocument;
 import com.github.jasminb.jsonapi.ResourceConverter;
 
+import patreon.java.resources.Address;
+import patreon.java.resources.Benefit;
+import patreon.java.resources.Campaign;
+import patreon.java.resources.Deliverable;
+import patreon.java.resources.Goal;
+import patreon.java.resources.Media;
+import patreon.java.resources.Member;
+import patreon.java.resources.PledgeEvent;
+import patreon.java.resources.Post;
+import patreon.java.resources.Tier;
+import patreon.java.resources.User;
+import patreon.java.resources.Address.AddressField;
+import patreon.java.resources.Benefit.BenefitField;
+import patreon.java.resources.Campaign.CampaignField;
+import patreon.java.resources.Deliverable.DeliverableField;
+import patreon.java.resources.Goal.GoalField;
+import patreon.java.resources.Media.MediaField;
+import patreon.java.resources.Member.MemberField;
+import patreon.java.resources.PledgeEvent.PledgeEventField;
+import patreon.java.resources.Post.PostField;
+import patreon.java.resources.Tier.TierField;
+import patreon.java.resources.User.UserField;
 import patreon.java.resources.shared.BaseResource;
 import patreon.java.resources.shared.Field;
-import patreon.java.resources.v2.Address;
-import patreon.java.resources.v2.Benefit;
-import patreon.java.resources.v2.Campaign;
-import patreon.java.resources.v2.Deliverable;
-import patreon.java.resources.v2.Goal;
-import patreon.java.resources.v2.Media;
-import patreon.java.resources.v2.Member;
-import patreon.java.resources.v2.PledgeEvent;
-import patreon.java.resources.v2.Post;
-import patreon.java.resources.v2.Tier;
-import patreon.java.resources.v2.User;
-import patreon.java.resources.v2.Address.AddressField;
-import patreon.java.resources.v2.Benefit.BenefitField;
-import patreon.java.resources.v2.Campaign.CampaignField;
-import patreon.java.resources.v2.Deliverable.DeliverableField;
-import patreon.java.resources.v2.Goal.GoalField;
-import patreon.java.resources.v2.Media.MediaField;
-import patreon.java.resources.v2.Member.MemberField;
-import patreon.java.resources.v2.PledgeEvent.PledgeEventField;
-import patreon.java.resources.v2.Post.PostField;
-import patreon.java.resources.v2.Tier.TierField;
-import patreon.java.resources.v2.User.UserField;
 
 public class PatreonAPI {
-
-	class RelationshipResolver implements com.github.jasminb.jsonapi.RelationshipResolver {
-		private PatreonAPI api;
-
-		public RelationshipResolver(PatreonAPI api) {
-			this.api = api;
-		}
-
-		@Override
-		public byte[] resolve(String relationshipURL) {
-			System.out.println(relationshipURL);
-			
-			if (relationshipURL.contains("oauth2/v2")) {
-				String pathPrefix = relationshipURL.substring(relationshipURL.indexOf("v2/") + 3);
-				System.out.println("Path prefix: " + pathPrefix);
-
-				if (pathPrefix.contains("campaigns/")) {
-					String campaignID = pathPrefix.substring(10);
-
-					try (BufferedReader reader = new BufferedReader(
-							new InputStreamReader(api.fetchCampaignInputStreamFromID(campaignID)))) {
-						return reader.readLine().getBytes();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				} else if (pathPrefix.contains("user/")) {
-					String userID = pathPrefix.substring(5);
-					
-
-					try (BufferedReader reader = new BufferedReader(
-							new InputStreamReader(api.fetchUserInputStreamFromID(userID)))) {
-						return reader.readLine().getBytes();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-
-			return null;
-		}
-
-	}
 
 	/**
 	 * The base URI for requests to the patreon API. This may be overridden (e.g.
@@ -119,20 +75,15 @@ public class PatreonAPI {
 
 		this.converter = new ResourceConverter(objectMapper, Address.class, Benefit.class, Campaign.class,
 				Deliverable.class, Goal.class, Media.class, Member.class, PledgeEvent.class, Post.class, Tier.class,
-				User.class, patreon.java.resources.v1.User.class);
+				User.class);
 		this.converter.enableDeserializationOption(DeserializationFeature.ALLOW_UNKNOWN_INCLUSIONS);
-		this.converter.setGlobalResolver(new RelationshipResolver(this));
 	}
 
 	public User fetchUser() throws IOException {
-		URIBuilder pathBuilder = new URIBuilder().setPath("identity").addParameter("include", "memberships,campaign");
+		URIBuilder pathBuilder = new URIBuilder().setPath("identity").addParameter("include",
+				"campaign.benefits.campaign,campaign.benefits.deliverables.benefit,campaign.benefits.deliverables.campaign,campaign.benefits.deliverables.member.pledge_history.campaign,campaign.benefits.deliverables.member.pledge_history.patron,campaign.benefits.deliverables.member.pledge_history.tier,campaign.benefits.deliverables.member.user,campaign.benefits.deliverables.user,campaign.benefits.tiers.benefits,campaign.benefits.tiers.campaign,campaign.benefits.tiers.tier_image,campaign.creator.campaign,campaign.creator.memberships,campaign.goals.campaign,campaign.tiers.benefits.campaign,campaign.tiers.benefits,campaign.tiers.campaign,campaign.tiers.tier_image,memberships.campaign,memberships.address,memberships.currently_entitled_tiers.benefits,memberships.pledge_history.campaign,memberships.pledge_history.patron,memberships.pledge_history.tier,memberships.user.campaign,memberships.user.memberships");
 		addAllFields(pathBuilder);
 		return converter.readDocument(getDataStream(pathBuilder.toString(), false), User.class).get();
-	}
-	
-	private InputStream fetchUserInputStreamFromID(String userID) throws IOException {
-		URIBuilder pathBuilder = new URIBuilder().setPath("user/" + userID);
-		return getDataStream(pathBuilder.toString(), true);
 	}
 
 	public JSONAPIDocument<List<Campaign>> fetchCampaigns() throws IOException {
@@ -142,38 +93,31 @@ public class PatreonAPI {
 		return converter.readDocumentCollection(getDataStream(pathBuilder.toString(), false), Campaign.class);
 	}
 
-	public JSONAPIDocument<Campaign> fetchCampaignFromID(String ID) throws IOException {
-		URIBuilder pathBuilder = new URIBuilder().setPath("campaigns/" + ID).addParameter("include",
+	public Campaign fetchCampaign(String campaignID) throws IOException {
+		URIBuilder pathBuilder = new URIBuilder().setPath("campaigns/" + campaignID).addParameter("include",
 				"tiers,creator,benefits,goals");
 		addAllFields(pathBuilder);
-		return converter.readDocument(getDataStream(pathBuilder.toString(), false), Campaign.class);
+		return converter.readDocument(getDataStream(pathBuilder.toString(), false), Campaign.class).get();
 	}
-	
+
 	public JSONAPIDocument<List<Post>> fetchPosts(String campaignID) throws IOException {
-		URIBuilder pathBuilder = new URIBuilder().setPath("campaigns/" + campaignID + "/posts").addParameter("include", "campaign,user");
+		URIBuilder pathBuilder = new URIBuilder().setPath("campaigns/" + campaignID + "/posts").addParameter("include","campaign,user.campaign");
 		addAllFields(pathBuilder);
 		return converter.readDocumentCollection(getDataStream(pathBuilder.toString(), false), Post.class);
 	}
 
-	private InputStream fetchCampaignInputStreamFromID(String ID) throws IOException {
-		URIBuilder pathBuilder = new URIBuilder().setPath("campaigns/" + ID).addParameter("include",
-				"tiers,creator,benefits,goals");
-		addAllFields(pathBuilder);
-		return getDataStream(pathBuilder.toString(), false);
-	}
-
 	public JSONAPIDocument<List<Member>> fetchMembers(String campaignID) throws IOException {
 		URIBuilder pathBuilder = new URIBuilder().setPath("campaigns/" + campaignID + "/members")
-				.addParameter("include", "address,campaign,currently_entitled_tiers,pledge_history,user");
+				.addParameter("include", "address,campaign,currently_entitled_tiers,pledge_history,user.memberships");
 		addAllFields(pathBuilder);
 		return converter.readDocumentCollection(getDataStream(pathBuilder.toString(), false), Member.class);
 	}
 
-	public JSONAPIDocument<Member> fetchMember(String memberID) throws IOException {
+	public Member fetchMember(String memberID) throws IOException {
 		URIBuilder pathBuilder = new URIBuilder().setPath("members/" + memberID).addParameter("include",
 				"address,campaign,currently_entitled_tiers,pledge_history,user");
 		addAllFields(pathBuilder);
-		return converter.readDocument(getDataStream(pathBuilder.toString(), false), Member.class);
+		return converter.readDocument(getDataStream(pathBuilder.toString(), false), Member.class).get();
 	}
 
 	private InputStream getDataStream(String suffix, boolean v1) throws IOException {

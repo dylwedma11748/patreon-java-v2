@@ -6,38 +6,40 @@ import java.util.List;
 import com.github.jasminb.jsonapi.JSONAPIDocument;
 
 import patreon.java.PatreonAPI;
+import patreon.java.resources.Benefit;
+import patreon.java.resources.Campaign;
+import patreon.java.resources.Goal;
+import patreon.java.resources.Member;
+import patreon.java.resources.PledgeEvent;
+import patreon.java.resources.Post;
+import patreon.java.resources.Tier;
+import patreon.java.resources.User;
 import patreon.java.resources.shared.PaginationMeta;
-import patreon.java.resources.v2.Benefit;
-import patreon.java.resources.v2.Campaign;
-import patreon.java.resources.v2.Goal;
-import patreon.java.resources.v2.Member;
-import patreon.java.resources.v2.PledgeEvent;
-import patreon.java.resources.v2.Post;
-import patreon.java.resources.v2.Tier;
-import patreon.java.resources.v2.User;
 
 public class PatreonAPITest {
 
 	private static final String PATREON_ACCESS_KEY = "YOUR_ACCESS_KEY";
 	private static final PatreonAPI apiClient = new PatreonAPI(PATREON_ACCESS_KEY);
-	
+
 	public static void main(String[] args) {
-		testCampaign();
+		testUser();
+		//testCampaign();
+		 //testPost("");
 	}
-	
+
 	private static void testUser() {
 		User user = null;
-		
+
 		try {
 			user = apiClient.fetchUser();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		System.out.println("[Identity endpoint test]\n");
-		
+
 		System.out.println("[User fields]");
-		
+
 		System.out.println(user.getAbout());
 		System.out.println(user.getCreated());
 		System.out.println(user.getEmail());
@@ -48,12 +50,14 @@ public class PatreonAPITest {
 		System.out.println(user.getLikeCount());
 		System.out.println(user.getThumbURL());
 		System.out.println(user.getURL());
-		System.out.println(user.getVanity()); // The field works, but you should use user.getCampaign().getVanity() in this case instead.
+		// System.out.println(user.getVanity()); // The field works, but you should use
+		// user.getCampaign().getVanity() in this case instead.
 		System.out.println(user.getSocialConnections());
-		
+		System.err.println("Membership 0: " + user.getMemberships().get(0).getFullName());
+
 		System.out.println("\n[Campaign fields]");
 		Campaign campaign = user.getCampaign();
-		
+
 		System.out.println("[Campaign]");
 		System.out.println("Created at: " + campaign.getCreatedAt());
 		System.out.println("Creation name: " + campaign.getCreationName());
@@ -76,22 +80,24 @@ public class PatreonAPITest {
 		System.out.println("URL: " + campaign.getURL());
 		System.out.println("Vanity: " + campaign.getVanity());
 		
-		testCampaign();
+		System.err.println("Campaign tier image: " + campaign.getTiers().get(0).getBenefits().get(0).getDeliverables().get(0).getMember().getPledgeHistory().get(0).getTier().getTierImage());
+
+		//testCampaign();
 	}
-	
+
 	private static void testCampaign() {
 		System.out.println("[Campaign endpoint test]\n");
-		
+
 		JSONAPIDocument<List<Campaign>> campaginResponse = null;
-		
+
 		try {
 			campaginResponse = apiClient.fetchCampaigns();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		List<Campaign> campagins = campaginResponse.get();
-		
+
 		for (Campaign campaign : campagins) {
 			System.out.println("[Campaign]");
 			System.out.println("Created at: " + campaign.getCreatedAt());
@@ -119,9 +125,9 @@ public class PatreonAPITest {
 			System.out.println("Thanks Video URL: " + campaign.getThanksVideoURL());
 			System.out.println("URL: " + campaign.getURL());
 			System.out.println("Vanity: " + campaign.getVanity());
-			
+
 			List<Benefit> benefits = campaign.getBenefits();
-			
+
 			for (Benefit benefit : benefits) {
 				System.out.println("\n[Benefit]");
 				System.out.println("App External ID: " + benefit.getAppExternalId());
@@ -140,64 +146,69 @@ public class PatreonAPITest {
 				System.out.println("Tiers Count: " + benefit.getTiersCount());
 				System.out.println("Title: " + benefit.getTitle());
 			}
-			
+
 			for (Tier tier : campaign.getTiers()) {
-				System.out.println(tier.getAmountCents());
+				System.err.println("\nTeir Benefits: " + tier);
 			}
-			
-			for (Goal goal: campaign.getGoals()) {
-				System.out.println("Goal description: " + goal.getCampaign());
+
+			for (Goal goal : campaign.getGoals()) {
+				System.out.println("Goal description: " + goal.getDescription());
 			}
-			
+
 			testMember(campaign.getId());
-			//testPost(campaign.getId());
+			// testPost(campaign.getId());
 		}
 	}
-	
+
 	private static void testMember(String id) {
 		JSONAPIDocument<List<Member>> memberResponse = null;
-		
+
 		try {
 			memberResponse = apiClient.fetchMembers(id);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		List<Member> members = memberResponse.get();
-		
+
 		PaginationMeta meta = memberResponse.getMeta(PaginationMeta.class);
-		StringBuilder metaString = new StringBuilder().append("\n[meta]").append("\ntotal: " + meta.getTotal()).append("\nnext: " + meta.getNextCursor() + "\n");
+		StringBuilder metaString = new StringBuilder().append("\n[meta]").append("\ntotal: " + meta.getTotal())
+				.append("\nnext: " + meta.getNextCursor() + "\n");
 		System.out.println(metaString);
-		
+
 		for (Member member : members) {
-			patreon.java.resources.v1.User user = member.getUser();
+			User user = member.getUser();
 			System.out.println(user.getLastName());
 			Campaign c = member.getCampaign();
 			System.out.println("Campaign Date: " + c.getPublishedAt());
-			
+			System.out.println(
+					"Tiers benefits: " + member.getCurrentlyEntitledTiers().get(0).getBenefits());
 			System.out.println("Member patron status: " + member.getPatronStatus());
-			
+			System.out.println("Address: " + member.getAddress().getAddressee());
+
 			List<Tier> tiers = member.getCurrentlyEntitledTiers();
-			
+
 			for (Tier tier : tiers) {
 				System.out.println(tier.getAmountCents());
 			}
 			
+			System.err.println("Memberships: " + member.getUser().getMemberships());
+
 			List<PledgeEvent> pledgeHistory = member.getPledgeHistory();
-			
+
 			for (PledgeEvent event : pledgeHistory) {
-				//System.out.println("Pledge event tier: " + event.getTier());
+				//System.out.println("Pledge event tier: " + event.getTierTitle());
 			}
 		}
 	}
-	
+
 	private static void testPost(String ID) {
 		try {
 			System.out.println("\n[Post endpoint test]");
-			
+
 			for (Post post : apiClient.fetchPosts(ID).get()) {
 				System.out.println("\n[Post]");
-				
+
 				System.out.println("App ID: " + post.getAppId());
 				System.out.println("App Status: " + post.getAppStatus());
 				System.out.println("Content: " + post.getContent());
@@ -209,8 +220,8 @@ public class PatreonAPITest {
 				System.out.println("Published At: " + post.getPublishedAt());
 				System.out.println("Title: " + post.getTitle());
 				System.out.println("URL: " + post.getURL());
-				
-				System.out.println(post.getCampaign());
+
+				System.out.println(post.getUser().getCampaign().getBenefits());
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
