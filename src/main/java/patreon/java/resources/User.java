@@ -93,7 +93,6 @@ public class User extends BaseResource {
 	@Relationship("campaign")
 	private Campaign campaign;
 
-	// Untested
 	@Relationship("memberships")
 	private List<Member> memberships;
 

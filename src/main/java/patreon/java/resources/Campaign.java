@@ -452,7 +452,7 @@ public class Campaign extends BaseResource {
 	}
 
 	/**
-	 * Returns the campaign's benefits.
+	 * Returns the campaign's benefits. This may return null if you don't manage this campaign.
 	 * 
 	 * @return the campaign's benefits
 	 */
@@ -461,7 +461,7 @@ public class Campaign extends BaseResource {
 	}
 
 	/**
-	 * Returns the campaign owner.
+	 * Returns the campaign owner. This may return null if you don't manage this campaign.
 	 * 
 	 * @return the campaign owner
 	 */
@@ -470,7 +470,7 @@ public class Campaign extends BaseResource {
 	}
 
 	/**
-	 * Returns the campaign's goals.
+	 * Returns the campaign's goals. This may return null if you don't manage this campaign.
 	 * 
 	 * @return the campaign's goals
 	 */
@@ -479,7 +479,7 @@ public class Campaign extends BaseResource {
 	}
 
 	/**
-	 * Returns the campaign's tiers.
+	 * Returns the campaign's tiers. This may return null if you don't manage this campaign.
 	 * 
 	 * @return the campaign's tiers
 	 */

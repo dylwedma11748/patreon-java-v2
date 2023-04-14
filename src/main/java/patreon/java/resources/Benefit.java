@@ -90,16 +90,13 @@ public class Benefit extends BaseResource {
 	private int tiersCount;
 	private String title;
 
-	// Currently a dead end
-	@Relationship(value = "campaign", resolve = true)
+	@Relationship("campaign")
 	private Campaign campaign;
 
-	// Currently a dead end
-	@Relationship(value = "deliverables", resolve = true)
+	@Relationship("deliverables")
 	private List<Deliverable> deliverables;
 
-	// Currently a dead end
-	@Relationship(value = "tiers", resolve = true)
+	@Relationship("tiers")
 	private List<Tier> tiers;
 
 	public Benefit(@JsonProperty("app_external_id") String appExternalId, @JsonProperty("app_meta") Object appMeta,
