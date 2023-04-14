@@ -7,7 +7,7 @@
 Webhooks and OAuthClients are currently not supported.
  
 ## Using the library
-To use the library, you'll need your creator access token. You can find it on the [Patreon Platform](https://www.patreon.com/portal/registration/register-clients).
+To use the library, you'll need your creator access token. You can find it on the [Patreon Platform](https://www.patreon.com/portal/registration/register-clients). Do NOT share your token with anyone else.
 
 ### Initializing
 Create a new instance of PatreonAPI with your access token.
@@ -16,8 +16,9 @@ PatreonAPI apiClient = new PatreonAPI(PATREON_ACCESS_KEY)
 ```
 
 ## Endpoints
+
 ### Identity - /api/oauth2/v2/identity
-The Identity endpoint is used for accessing information about the current User with reference to the oauth token.
+The Identity endpoint is used for fetching information about the current User with reference to the oauth token.
 ```java
 User user = apiClient.fetchUser();
 ```
@@ -26,10 +27,10 @@ From here you can access information about your campaign.
 Campaign campaign = user.getCampaign();
 
 System.out.println("Created at: " + campaign.getCreatedAt());
+System.out.println("Creation name: " + campaign.getCreationName());
 System.out.println("Patron Count: " + campaign.getPatronCount());
 System.out.println("Pledge URL: " + campaign.getPledgeURL());
 System.out.println("Publshed At: " + campaign.getPublishedAt());
-System.out.println("Summary: " + campaign.getSummary());
 System.out.println("URL: " + campaign.getURL());
 System.out.println("Vanity: " + campaign.getVanity();
 ```
@@ -44,8 +45,69 @@ The identity endpoint also lets you access information about your memberships to
 ```java
 List<Member> memberships = user.getMemberships();
 ```
-From here you can get your user information like name, email, pledge amounts, and pledge history.
+From here you can get your member information like name, email, pledge cadence, and pledge history.
 ```java
 Member member = memberships.get(0);
+
+System.out.println("Name: " + member.getFullName());
+System.out.println("Email: " + member.getEmail());
+System.out.println("Pledge Cadence: " + member.getPledgeCadence() + " months");
+
 List<PledgeEvent> pledgeHistory = member.getPledgeHistory();
 ```
+
+### Campaigns - /api/oauth2/v2/campaigns or /api/oauth2/v2/campaigns/xxxxx
+These endpoints are for fetching information about campaigns. If you specify a campaign ID, it will retrieve information about that specific campaign. Otherwise it will return a list of campaigns owned by the authorized user.
+```java
+String ID = "CAMPAIGN_ID";
+Campaign campaign = apiClient.fetchCampaign(ID);
+```
+```java
+List<Campaigns> campaigns = apiClient.fetchCampaigns();
+Campaign campaign = campaigns.get(0);
+```
+
+### Members - /api/oauth2/v2/campaigns/xxxxx/members or /api/oauth2/v2/members/xxxxx
+These endpoints are for fetching information about members. If you specify a campaign ID to get a list of members for that campaign. If you specify a member ID to get information about that specific member.
+```java
+JSONAPIDocument<List<Member>> response = apiClient.fetchMembers(campaign.getID());
+List<Member> members = response.get();
+
+for (Member member : members) {
+    System.out.println("Name: " + member.getFullName());
+}
+```
+```java
+String ID = "MEMBER_ID";
+Member member = apiClient.fetchMember(ID);
+```
+The response from the client does also have some pagination meta.
+```json
+"meta": {
+    "pagination": {
+        "cursors": {
+             "next": null
+        },
+        "total": 1
+    }
+}
+```
+Returns from this endpoint have 500 results in one page. This is because the library requests pledge history for each member. This pagination meta is supposed to return a next page cursor. The library does has a resource that can deserialize this.
+```java
+PaginationMeta meta = response.getMeta(PaginationMeta.class);
+StringBuilder metaString = new StringBuilder().append("\n[meta]").append("\ntotal: " + meta.getTotal()).append("\nnext: " + meta.getNextCursor() + "\n");
+System.out.println(metaString);
+```
+But I don't have a campaign with more than 500 members in order to test it.
+
+### Posts - /api/oauth2/v2/campaigns/{campaign_id}/posts
+This endpoint is for fetching a list of all the Posts on a given Campaign by campaign ID.
+```java
+JSONAPIDocument<List<Post>> response = apiClient.fetchPosts(campaign.getID());
+List<Post> posts = response.get();
+
+for (Post post : posts) {
+    System.out.println(post.getContent());
+}
+```
+Like the members endpoint, this endpoint also has some pagination meta. The API docs doesn't say how many results are in one return. But the meta can also still be deserialized.
