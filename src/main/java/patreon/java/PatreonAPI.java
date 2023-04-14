@@ -81,47 +81,105 @@ public class PatreonAPI {
 
 	public User fetchUser() throws IOException {
 		URIBuilder pathBuilder = new URIBuilder().setPath("identity").addParameter("include",
-				"campaign.benefits.campaign,campaign.benefits.deliverables.benefit,campaign.benefits.deliverables.campaign,campaign.benefits.deliverables.member.pledge_history.campaign,campaign.benefits.deliverables.member.pledge_history.patron,campaign.benefits.deliverables.member.pledge_history.tier,campaign.benefits.deliverables.member.user,campaign.benefits.deliverables.user,campaign.benefits.tiers.benefits,campaign.benefits.tiers.campaign,campaign.benefits.tiers.tier_image,campaign.creator.campaign,campaign.creator.memberships,campaign.goals.campaign,campaign.tiers.benefits.campaign,campaign.tiers.benefits,campaign.tiers.campaign,campaign.tiers.tier_image,memberships.campaign,memberships.address,memberships.currently_entitled_tiers.benefits,memberships.pledge_history.campaign,memberships.pledge_history.patron,memberships.pledge_history.tier,memberships.user.campaign,memberships.user.memberships");
+				"campaign.benefits.campaign," + "campaign.benefits.deliverables.benefit,"
+						+ "campaign.benefits.deliverables.campaign,"
+						+ "campaign.benefits.deliverables.member.address.campaigns,"
+						+ "campaign.benefits.deliverables.member.address.user.campaign,"
+						+ "campaign.benefits.deliverables.member.address.user.memberships,"
+						+ "campaign.benefits.deliverables.member.campaign,"
+						+ "campaign.benefits.deliverables.member.currently_entitled_tiers,"
+						+ "campaign.benefits.deliverables.member.pledge_history.campaign,"
+						+ "campaign.benefits.deliverables.member.pledge_history.patron,"
+						+ "campaign.benefits.deliverables.member.pledge_history.tier,"
+						+ "campaign.benefits.deliverables.member.user.campaign,"
+						+ "campaign.benefits.deliverables.member.user.memberships,"
+						+ "campaign.benefits.deliverables.user.campaign,"
+						+ "campaign.benefits.deliverables.user.memberships," + "campaign.benefits.tiers.benefits,"
+						+ "campaign.benefits.tiers.campaign," + "campaign.benefits.tiers.tier_image,"
+						+ "campaign.creator.campaign," + "campaign.creator.memberships," + "campaign.goals.campaign,"
+						+ "campaign.tiers.benefits.campaign," + "campaign.tiers.benefits," + "campaign.tiers.campaign,"
+						+ "campaign.tiers.tier_image," + "memberships.campaign," + "memberships.address,"
+						+ "memberships.currently_entitled_tiers.benefits," + "memberships.pledge_history.campaign,"
+						+ "memberships.pledge_history.patron," + "memberships.pledge_history.tier,"
+						+ "memberships.user.campaign," + "memberships.user.memberships");
 		addAllFields(pathBuilder);
-		return converter.readDocument(getDataStream(pathBuilder.toString(), false), User.class).get();
+		return converter.readDocument(getDataStream(pathBuilder.toString()), User.class).get();
 	}
 
 	public JSONAPIDocument<List<Campaign>> fetchCampaigns() throws IOException {
 		URIBuilder pathBuilder = new URIBuilder().setPath("campaigns").addParameter("include",
 				"tiers,creator,benefits,goals");
 		addAllFields(pathBuilder);
-		return converter.readDocumentCollection(getDataStream(pathBuilder.toString(), false), Campaign.class);
+		return converter.readDocumentCollection(getDataStream(pathBuilder.toString()), Campaign.class);
 	}
 
 	public Campaign fetchCampaign(String campaignID) throws IOException {
 		URIBuilder pathBuilder = new URIBuilder().setPath("campaigns/" + campaignID).addParameter("include",
 				"tiers,creator,benefits,goals");
 		addAllFields(pathBuilder);
-		return converter.readDocument(getDataStream(pathBuilder.toString(), false), Campaign.class).get();
-	}
-
-	public JSONAPIDocument<List<Post>> fetchPosts(String campaignID) throws IOException {
-		URIBuilder pathBuilder = new URIBuilder().setPath("campaigns/" + campaignID + "/posts").addParameter("include","campaign,user.campaign");
-		addAllFields(pathBuilder);
-		return converter.readDocumentCollection(getDataStream(pathBuilder.toString(), false), Post.class);
+		return converter.readDocument(getDataStream(pathBuilder.toString()), Campaign.class).get();
 	}
 
 	public JSONAPIDocument<List<Member>> fetchMembers(String campaignID) throws IOException {
-		URIBuilder pathBuilder = new URIBuilder().setPath("campaigns/" + campaignID + "/members")
-				.addParameter("include", "address,campaign,currently_entitled_tiers,pledge_history,user.memberships");
+		URIBuilder pathBuilder = new URIBuilder().setPath("campaigns/" + campaignID + "/members").addParameter(
+				"include",
+				"address.campaigns," + "address.user," + "campaign.benefits.campaign,"
+						+ "campaign.benefits.deliverables.benefit," + "campaign.benefits.deliverables.campaign,"
+						+ "campaign.benefits.deliverables.member.address.campaigns,"
+						+ "campaign.benefits.deliverables.member.address.user.campaign,"
+						+ "campaign.benefits.deliverables.member.address.user.memberships,"
+						+ "campaign.benefits.deliverables.member.campaign,"
+						+ "campaign.benefits.deliverables.member.currently_entitled_tiers,"
+						+ "campaign.benefits.deliverables.member.pledge_history.campaign,"
+						+ "campaign.benefits.deliverables.member.pledge_history.patron,"
+						+ "campaign.benefits.deliverables.member.pledge_history.tier,"
+						+ "campaign.benefits.deliverables.member.user.campaign,"
+						+ "campaign.benefits.deliverables.member.user.memberships,"
+						+ "campaign.benefits.deliverables.user.campaign,"
+						+ "campaign.benefits.deliverables.user.memberships," + "campaign.benefits.tiers.benefits,"
+						+ "campaign.benefits.tiers.campaign," + "campaign.benefits.tiers.tier_image,"
+						+ "campaign.goals.campaign," + "currently_entitled_tiers.benefits.campaign,"
+						+ "currently_entitled_tiers.campaign," + "currently_entitled_tiers.tier_image,"
+						+ "pledge_history.campaign," + "pledge_history.patron," + "pledge_history.tier,"
+						+ "user.memberships.user");
 		addAllFields(pathBuilder);
-		return converter.readDocumentCollection(getDataStream(pathBuilder.toString(), false), Member.class);
+		return converter.readDocumentCollection(getDataStream(pathBuilder.toString()), Member.class);
 	}
 
 	public Member fetchMember(String memberID) throws IOException {
 		URIBuilder pathBuilder = new URIBuilder().setPath("members/" + memberID).addParameter("include",
-				"address,campaign,currently_entitled_tiers,pledge_history,user");
+				"address.campaigns," + "address.user," + "campaign.benefits.campaign,"
+						+ "campaign.benefits.deliverables.benefit," + "campaign.benefits.deliverables.campaign,"
+						+ "campaign.benefits.deliverables.member.address.campaigns,"
+						+ "campaign.benefits.deliverables.member.address.user.campaign,"
+						+ "campaign.benefits.deliverables.member.address.user.memberships,"
+						+ "campaign.benefits.deliverables.member.campaign,"
+						+ "campaign.benefits.deliverables.member.currently_entitled_tiers,"
+						+ "campaign.benefits.deliverables.member.pledge_history.campaign,"
+						+ "campaign.benefits.deliverables.member.pledge_history.patron,"
+						+ "campaign.benefits.deliverables.member.pledge_history.tier,"
+						+ "campaign.benefits.deliverables.member.user.campaign,"
+						+ "campaign.benefits.deliverables.member.user.memberships,"
+						+ "campaign.benefits.deliverables.user.campaign,"
+						+ "campaign.benefits.deliverables.user.memberships," + "campaign.benefits.tiers.benefits,"
+						+ "campaign.benefits.tiers.campaign," + "campaign.benefits.tiers.tier_image,"
+						+ "campaign.goals.campaign," + "currently_entitled_tiers.benefits.campaign,"
+						+ "currently_entitled_tiers.campaign," + "currently_entitled_tiers.tier_image,"
+						+ "pledge_history.campaign," + "pledge_history.patron," + "pledge_history.tier,"
+						+ "user.memberships.user");
 		addAllFields(pathBuilder);
-		return converter.readDocument(getDataStream(pathBuilder.toString(), false), Member.class).get();
+		return converter.readDocument(getDataStream(pathBuilder.toString()), Member.class).get();
+	}
+	
+	public JSONAPIDocument<List<Post>> fetchPosts(String campaignID) throws IOException {
+		URIBuilder pathBuilder = new URIBuilder().setPath("campaigns/" + campaignID + "/posts").addParameter("include",
+				"campaign,user.campaign");
+		addAllFields(pathBuilder);
+		return converter.readDocumentCollection(getDataStream(pathBuilder.toString()), Post.class);
 	}
 
-	private InputStream getDataStream(String suffix, boolean v1) throws IOException {
-		return this.requestUtil.request(suffix, this.accessToken, v1);
+	private InputStream getDataStream(String suffix) throws IOException {
+		return this.requestUtil.request(suffix, this.accessToken);
 	}
 
 	private URIBuilder addAllFields(URIBuilder builder) {
