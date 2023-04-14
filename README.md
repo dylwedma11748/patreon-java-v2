@@ -81,7 +81,7 @@ for (Member member : members) {
 String ID = "MEMBER_ID";
 Member member = apiClient.fetchMember(ID);
 ```
-The response from the client may also have some pagination meta.
+The response from the client does also have some pagination meta.
 ```json
 "meta": {
     "pagination": {
@@ -92,7 +92,22 @@ The response from the client may also have some pagination meta.
     }
 }
 ```
-With the scopes being requested by this library, returns from this endpoint have 
+Returns from this endpoint have 500 results in one page. This is because the library requests pledge history for each member. This pagination meta is supposed to return a next page cursor. The library does has a resource that can deserialize this.
+```java
+PaginationMeta meta = response.getMeta(PaginationMeta.class);
+StringBuilder metaString = new StringBuilder().append("\n[meta]").append("\ntotal: " + meta.getTotal()).append("\nnext: " + meta.getNextCursor() + "\n");
+System.out.println(metaString);
+```
+But I don't have a campaign with more than 500 members in order to test it.
 
 ### Posts - /api/oauth2/v2/campaigns/{campaign_id}/posts
 This endpoint is for fetching a list of all the Posts on a given Campaign by campaign ID.
+```java
+JSONAPIDocument<List<Post>> response = apiClient.fetchPosts(campaign.getID());
+List<Post> posts = response.get();
+
+for (Post post : posts) {
+    System.out.println(post.getContent());
+}
+```
+Like the members endpoint, this endpoint also has some pagination meta. The API docs doesn't say how many results are in one return. But the meta can also still be deserialized.
