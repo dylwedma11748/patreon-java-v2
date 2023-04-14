@@ -106,11 +106,17 @@ public class PatreonAPI {
 		return converter.readDocument(getDataStream(pathBuilder.toString()), User.class).get();
 	}
 
-	public JSONAPIDocument<List<Campaign>> fetchCampaigns() throws IOException {
+	public List<Campaign> fetchCampaigns() throws IOException {
 		URIBuilder pathBuilder = new URIBuilder().setPath("campaigns").addParameter("include",
-				"tiers,creator,benefits,goals");
+				"tiers.benefits,"
+				+ "tiers.campaign,"
+				+ "tiers.tier_image,"
+				+ "creator.memberships,"
+				+ "benefits.deliverables.benefit,"
+				+ "benefits.tiers,"
+				+ "goals");
 		addAllFields(pathBuilder);
-		return converter.readDocumentCollection(getDataStream(pathBuilder.toString()), Campaign.class);
+		return converter.readDocumentCollection(getDataStream(pathBuilder.toString()), Campaign.class).get();
 	}
 
 	public Campaign fetchCampaign(String campaignID) throws IOException {
