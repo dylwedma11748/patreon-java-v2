@@ -10,8 +10,9 @@ import java.net.URL;
 
 public class RequestUtil {
 
-	public InputStream request(String pathSuffix, String accessToken, boolean v1) throws IOException {
-		URL url = buildUrl(pathSuffix, v1);
+	public InputStream request(String pathSuffix, String accessToken) throws IOException {
+		URL url = buildUrl(pathSuffix);
+		System.out.println(url.toString());
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		connection.setRequestProperty("Authorization", "Bearer ".concat(accessToken));
 		connection.setRequestProperty("User-Agent", String.format("Patreon-Java-v2, version %s, platform %s %s",
@@ -19,18 +20,12 @@ public class RequestUtil {
 		return connection.getInputStream();
 	}
 
-	private URL buildUrl(String pathSuffix, boolean v1) throws MalformedURLException {
+	private URL buildUrl(String pathSuffix) throws MalformedURLException {
 		if (pathSuffix.startsWith("/")) {
 			pathSuffix = pathSuffix.substring(1, pathSuffix.length());
 		}
 
-		String prefix;
-
-		if (!v1) {
-			prefix = BASE_URI + "/api/oauth2/v2/";
-		} else {
-			prefix = BASE_URI + "/api/";
-		}
+		String prefix = BASE_URI + "/api/oauth2/v2/";
 
 		URL url = new URL(prefix.concat(pathSuffix));
 		return url;
