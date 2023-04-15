@@ -92,8 +92,7 @@ public class Member extends BaseResource {
 	private int pledgeCadence;
 	private String pledgeRelationshipStart;
 	private int willPayAmountCents;
-
-	// Currently untested
+	
 	@Relationship("address")
 	private Address address;
 
