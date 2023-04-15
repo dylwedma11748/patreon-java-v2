@@ -7,16 +7,27 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Properties;
 
 public class RequestUtil {
 
+	/**
+	 * Sends a request to Patreon's REST API.
+	 * 
+	 * @param pathSuffix the path after /api/oauth2/v2/
+	 * 
+	 * @param accessToken the access token
+	 * 
+	 * @see {@link PatreonAPI#BASE_URI}
+	 */
 	public InputStream request(String pathSuffix, String accessToken) throws IOException {
 		URL url = buildUrl(pathSuffix);
-		System.out.println(url.toString());
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+		
 		connection.setRequestProperty("Authorization", "Bearer ".concat(accessToken));
 		connection.setRequestProperty("User-Agent", String.format("Patreon-Java-v2, version %s, platform %s %s",
 				getVersion(), System.getProperty("os.name"), System.getProperty("os.version")));
+		
 		return connection.getInputStream();
 	}
 
@@ -26,15 +37,17 @@ public class RequestUtil {
 		}
 
 		String prefix = BASE_URI + "/api/oauth2/v2/";
-
 		URL url = new URL(prefix.concat(pathSuffix));
+		
 		return url;
 	}
 
 	private String getVersion() throws IOException {
 		InputStream resourceAsStream = this.getClass().getResourceAsStream("/version.properties");
-		java.util.Properties prop = new java.util.Properties();
+		Properties prop = new java.util.Properties();
+		
 		prop.load(resourceAsStream);
+		
 		return prop.getProperty("version");
 	}
 }

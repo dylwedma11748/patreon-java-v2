@@ -40,12 +40,15 @@ import patreon.java.resources.User.UserField;
 import patreon.java.resources.shared.BaseResource;
 import patreon.java.resources.shared.Field;
 
+/**
+ * An instance of the Patreon API. You only need <b>one</b> of these.
+ */
 public class PatreonAPI {
 
 	/**
-	 * The base URI for requests to the patreon API. This may be overridden (e.g.
+	 * The base URI for requests to the Patreon API. This may be overridden (e.g.
 	 * for testing) by passing -Dpatreon.rest.uri="https://my.other.server.com" as
-	 * jvm arguments
+	 * JVM arguments. The default URL is "https://www.patreon.com".
 	 */
 	public static final String BASE_URI = System.getProperty("patreon.rest.uri", "https://www.patreon.com");
 
@@ -79,6 +82,13 @@ public class PatreonAPI {
 		this.converter.enableDeserializationOption(DeserializationFeature.ALLOW_UNKNOWN_INCLUSIONS);
 	}
 
+	/**
+	 * Returns the user in relation with the access token.
+	 * 
+	 * @return the authenticated user
+	 * 
+	 * @throws IOException if the request fails
+	 */
 	public User fetchUser() throws IOException {
 		URIBuilder pathBuilder = new URIBuilder().setPath("identity").addParameter("include",
 				"campaign.benefits.campaign," + "campaign.benefits.deliverables.benefit,"
@@ -106,12 +116,24 @@ public class PatreonAPI {
 		return converter.readDocument(getDataStream(pathBuilder.toString()), User.class).get();
 	}
 
+	/**
+	 * Returns a list of campaigns owned by the authenticated user.
+	 * 
+	 * @return a list of campaigns
+	 * 
+	 * @throws IOException if the request fails
+	 */
 	public List<Campaign> fetchCampaigns() throws IOException {
 		URIBuilder pathBuilder = new URIBuilder().setPath("campaigns").addParameter("include",
 				"tiers.benefits,"
 				+ "tiers.campaign,"
 				+ "tiers.tier_image,"
-				+ "creator.memberships,"
+				+ "creator.memberships.address,"
+				+ "creator.memberships.campaign.benefits.campaign,"
+				+ "creator.memberships.campaign.benefits.tiers,"
+				+ "creator.memberships.campaign.tiers,"
+				+ "creator.memberships.currently_entitled_tiers.benefits,"
+				+ "benefits.campaign,"
 				+ "benefits.deliverables.benefit,"
 				+ "benefits.tiers,"
 				+ "goals");
@@ -119,6 +141,15 @@ public class PatreonAPI {
 		return converter.readDocumentCollection(getDataStream(pathBuilder.toString()), Campaign.class).get();
 	}
 
+	/**
+	 * Returns the campaign specified by it's ID.
+	 *
+	 * @return the campaign specified by it's ID
+	 *
+	 * @param campaignID the ID for the campaign
+	 * 
+	 * @throws IOException if the request fails
+	 */
 	public Campaign fetchCampaign(String campaignID) throws IOException {
 		URIBuilder pathBuilder = new URIBuilder().setPath("campaigns/" + campaignID).addParameter("include",
 				"tiers,creator,benefits,goals");
@@ -126,6 +157,15 @@ public class PatreonAPI {
 		return converter.readDocument(getDataStream(pathBuilder.toString()), Campaign.class).get();
 	}
 
+	/**
+	 * Returns a list of members from the specified campaign.
+	 * 
+	 * @return a list of members from the specified campaign
+	 *
+	 * @param campaignID the ID for the campaign
+	 * 
+	 * @throws IOException if the request fails
+	 */
 	public JSONAPIDocument<List<Member>> fetchMembers(String campaignID) throws IOException {
 		URIBuilder pathBuilder = new URIBuilder().setPath("campaigns/" + campaignID + "/members").addParameter(
 				"include",
@@ -152,6 +192,15 @@ public class PatreonAPI {
 		return converter.readDocumentCollection(getDataStream(pathBuilder.toString()), Member.class);
 	}
 
+	/**
+	 * Returns a member specified by their member ID.
+	 *
+	 * @return a member specified by their member ID
+	 *
+	 * @param memberID the ID for the member
+	 * 
+	 * @throws IOException if the request fails
+	 */
 	public Member fetchMember(String memberID) throws IOException {
 		URIBuilder pathBuilder = new URIBuilder().setPath("members/" + memberID).addParameter("include",
 				"address.campaigns," + "address.user," + "campaign.benefits.campaign,"
@@ -177,6 +226,15 @@ public class PatreonAPI {
 		return converter.readDocument(getDataStream(pathBuilder.toString()), Member.class).get();
 	}
 	
+	/**
+	 * Returns a list of posts from the specified campaign.
+	 * 
+	 * @return a list of posts from the campaign
+	 * 
+	 * @param campaignID the ID for the campaign
+	 * 
+	 * @throws IOException if the request fails
+	 */
 	public JSONAPIDocument<List<Post>> fetchPosts(String campaignID) throws IOException {
 		URIBuilder pathBuilder = new URIBuilder().setPath("campaigns/" + campaignID + "/posts").addParameter("include",
 				"campaign,user.campaign");
