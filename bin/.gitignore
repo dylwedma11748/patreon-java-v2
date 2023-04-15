@@ -1,2 +1,3 @@
+# Ignore build specific output directories
 /main/
 /test/
