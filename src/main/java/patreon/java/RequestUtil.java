@@ -9,6 +9,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Properties;
 
+/**
+ * A utility for making GET requests to Patreon's REST API. You only need <b>one</b> of these.
+ */
 public class RequestUtil {
 
 	/**
