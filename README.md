@@ -68,7 +68,7 @@ Campaign campaign = campaigns.get(0);
 ```
 
 ### Members - /api/oauth2/v2/campaigns/xxxxx/members or /api/oauth2/v2/members/xxxxx
-These endpoints are for fetching information about members. If you specify a campaign ID to get a list of members for that campaign. If you specify a member ID to get information about that specific member.
+These endpoints are for fetching information about members. If you specify a campaign ID, you will get a list of members for that campaign. If you specify a member ID, you will get information about that specific member.
 ```java
 JSONAPIDocument<List<Member>> response = apiClient.fetchMembers(campaign.getID());
 List<Member> members = response.get();
