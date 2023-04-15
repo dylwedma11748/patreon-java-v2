@@ -18,7 +18,9 @@ public class RequestUtil {
 	 * 
 	 * @param accessToken the access token
 	 * 
-	 * @see {@link PatreonAPI#BASE_URI}
+	 * @return the input stream
+	 * 
+	 * @throws IOException if the request fails
 	 */
 	public InputStream request(String pathSuffix, String accessToken) throws IOException {
 		URL url = buildUrl(pathSuffix);
