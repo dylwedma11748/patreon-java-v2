@@ -7,7 +7,9 @@
 Webhooks and OAuthClients are currently not supported.
  
 ## Using the library
-To use the library, you'll need your creator access token. You can find it on the [Patreon Platform](https://www.patreon.com/portal/registration/register-clients). Do NOT share your token with anyone else.
+Full documentation for the library is available [here](https://dylwedma11748.github.io/patreon-java-v2/index.html).
+
+To use the library, you'll need your creator access token. You can find it on the [Patreon Platform](https://www.patreon.com/portal/registration/register-clients). Do **NOT** share your token with anyone else.
 
 ### Initializing
 Create a new instance of PatreonAPI with your access token.
