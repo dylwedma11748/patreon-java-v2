@@ -125,18 +125,11 @@ public class PatreonAPI {
 	 */
 	public List<Campaign> fetchCampaigns() throws IOException {
 		URIBuilder pathBuilder = new URIBuilder().setPath("campaigns").addParameter("include",
-				"tiers.benefits,"
-				+ "tiers.campaign,"
-				+ "tiers.tier_image,"
-				+ "creator.memberships.address,"
-				+ "creator.memberships.campaign.benefits.campaign,"
-				+ "creator.memberships.campaign.benefits.tiers,"
-				+ "creator.memberships.campaign.tiers,"
-				+ "creator.memberships.currently_entitled_tiers.benefits,"
-				+ "benefits.campaign,"
-				+ "benefits.deliverables.benefit,"
-				+ "benefits.tiers,"
-				+ "goals");
+				"tiers.benefits," + "tiers.campaign," + "tiers.tier_image,"
+						+ "creator.memberships.campaign.benefits.campaign,"
+						+ "creator.memberships.campaign.benefits.tiers," + "creator.memberships.campaign.tiers,"
+						+ "creator.memberships.currently_entitled_tiers.benefits," + "benefits.campaign,"
+						+ "benefits.deliverables.benefit," + "benefits.tiers," + "goals.campaign");
 		addAllFields(pathBuilder);
 		return converter.readDocumentCollection(getDataStream(pathBuilder.toString()), Campaign.class).get();
 	}
@@ -152,7 +145,11 @@ public class PatreonAPI {
 	 */
 	public Campaign fetchCampaign(String campaignID) throws IOException {
 		URIBuilder pathBuilder = new URIBuilder().setPath("campaigns/" + campaignID).addParameter("include",
-				"tiers,creator,benefits,goals");
+				"tiers.benefits," + "tiers.campaign," + "tiers.tier_image,"
+						+ "creator.memberships.campaign.benefits.campaign,"
+						+ "creator.memberships.campaign.benefits.tiers," + "creator.memberships.campaign.tiers,"
+						+ "creator.memberships.currently_entitled_tiers.benefits," + "benefits.campaign,"
+						+ "benefits.deliverables.benefit," + "benefits.tiers," + "goals.campaign");
 		addAllFields(pathBuilder);
 		return converter.readDocument(getDataStream(pathBuilder.toString()), Campaign.class).get();
 	}
@@ -225,7 +222,7 @@ public class PatreonAPI {
 		addAllFields(pathBuilder);
 		return converter.readDocument(getDataStream(pathBuilder.toString()), Member.class).get();
 	}
-	
+
 	/**
 	 * Returns a list of posts from the specified campaign.
 	 * 
@@ -240,6 +237,22 @@ public class PatreonAPI {
 				"campaign,user.campaign");
 		addAllFields(pathBuilder);
 		return converter.readDocumentCollection(getDataStream(pathBuilder.toString()), Post.class);
+	}
+
+	/**
+	 * Returns a post specified by it's ID.
+	 * 
+	 * @return a post specified by it's ID
+	 * 
+	 * @param postID the ID for the post
+	 * 
+	 * @throws IOException if the request fails
+	 */
+	public Post fetchPost(String postID) throws IOException {
+		URIBuilder pathBuilder = new URIBuilder().setPath("posts/" + postID).addParameter("include",
+				"campaign,user.campaign");
+		addAllFields(pathBuilder);
+		return converter.readDocument(getDataStream(pathBuilder.toString()), Post.class).get();
 	}
 
 	private InputStream getDataStream(String suffix) throws IOException {
