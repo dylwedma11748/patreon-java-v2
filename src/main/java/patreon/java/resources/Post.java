@@ -176,7 +176,7 @@ public class Post extends BaseResource {
 	 * post. Empty array if no tiers assigned even if {@link #isPaid()} is true. Can
 	 * be null.
 	 * 
-	 * @return the tier IDs to view the post or null.
+	 * @return the tier IDs to view the post or null
 	 */
 	public List<String> getTiers() {
 		return tiers;
@@ -219,7 +219,7 @@ public class Post extends BaseResource {
 	public User getUser() {
 		return user;
 	}
-	
+
 	/**
 	 * Returns the campaign that the membership is for.
 	 * 

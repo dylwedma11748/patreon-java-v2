@@ -92,7 +92,7 @@ public class Tier extends BaseResource {
 	private String unpublishedAt;
 	private String url;
 	private int userLimit;
-	
+
 	@Relationship("benefits")
 	private List<Benefit> benefits;
 
@@ -285,7 +285,7 @@ public class Tier extends BaseResource {
 	public int getUserLimit() {
 		return userLimit;
 	}
-	
+
 	/**
 	 * Returns the benefits attached to the tier, which are used for generating
 	 * deliverables.

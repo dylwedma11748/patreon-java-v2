@@ -23,6 +23,7 @@ class MetaDeserializer extends JsonDeserializer<PaginationMeta> {
 		return new PaginationMeta(nextCursor, total);
 	}
 }
+
 /**
  * A class representing the pagination meta for some responses.
  */

@@ -191,7 +191,7 @@ public class Address extends BaseResource {
 	/**
 	 * Returns the user this address belongs to.
 	 * 
-	 * @return the user this address belongs to.
+	 * @return the user this address belongs to
 	 */
 	public User getUser() {
 		return user;

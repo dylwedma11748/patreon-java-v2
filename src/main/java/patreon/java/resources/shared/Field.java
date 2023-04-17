@@ -5,9 +5,9 @@ package patreon.java.resources.shared;
  */
 public interface Field {
 	/**
-     * Returns the property name of the field.
-     *
-     * @return the property name of the field
-     */
+	 * Returns the property name of the field.
+	 *
+	 * @return the property name of the field
+	 */
 	String getPropertyName();
 }

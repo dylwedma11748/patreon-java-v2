@@ -34,7 +34,7 @@ public class BaseResource {
 	 */
 	public static String getType(Class<? extends BaseResource> resourceClass) {
 		Type type = resourceClass.getAnnotation(Type.class);
-		
+
 		if (type != null) {
 			return type.value();
 		} else {
@@ -71,11 +71,11 @@ public class BaseResource {
 		if (this == o) {
 			return true;
 		}
-		
+
 		if (o == null || getClass() != o.getClass()) {
 			return false;
 		}
-		
+
 		return this.hashCode() == o.hashCode();
 	}
 }

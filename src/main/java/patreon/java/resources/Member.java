@@ -92,7 +92,7 @@ public class Member extends BaseResource {
 	private int pledgeCadence;
 	private String pledgeRelationshipStart;
 	private int willPayAmountCents;
-	
+
 	@Relationship("address")
 	private Address address;
 
@@ -204,7 +204,7 @@ public class Member extends BaseResource {
 	 * Returns the result of the last attempted charge. The only successful status
 	 * is Paid. Can be null if never charged.
 	 * 
-	 * @return one of Paid, Declined, Deleted, Pending, Refunded, Fraud, Other.
+	 * @return one of Paid, Declined, Deleted, Pending, Refunded, Fraud, Other
 	 */
 	public String getLastChargeStatus() {
 		return lastChargeStatus;

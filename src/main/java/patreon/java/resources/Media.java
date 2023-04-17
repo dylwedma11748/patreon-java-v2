@@ -228,7 +228,8 @@ public class Media extends BaseResource {
 	}
 
 	/**
-	 * Returns the URL to perform a POST request to in order to upload the media file.
+	 * Returns the URL to perform a POST request to in order to upload the media
+	 * file.
 	 * 
 	 * @return the upload URL
 	 */

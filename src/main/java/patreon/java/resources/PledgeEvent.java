@@ -22,54 +22,54 @@ public class PledgeEvent extends BaseResource {
 	 * PledgeEvent resource.
 	 */
 	public enum PledgeEventField implements Field {
-	    /**
-	     * The amount of the pledge event in cents.
-	     */
-	    amount_cents("amount_cents"),
-	    /**
-	     * The currency code for the pledge event.
-	     */
-	    currency_code("currency_code"),
-	    /**
-	     * The date and time of the pledge event.
-	     */
-	    date("date"),
-	    /**
-	     * The payment status of the pledge event.
-	     */
-	    payment_status("payment_status"),
-	    /**
-	     * The ID of the tier associated with the pledge event.
-	     */
-	    tier_id("tier_id"),
-	    /**
-	     * The title of the tier associated with the pledge event.
-	     */
-	    tier_title("tier_title"),
-	    /**
-	     * The type of the pledge event.
-	     */
-	    type("type");
+		/**
+		 * The amount of the pledge event in cents.
+		 */
+		amount_cents("amount_cents"),
+		/**
+		 * The currency code for the pledge event.
+		 */
+		currency_code("currency_code"),
+		/**
+		 * The date and time of the pledge event.
+		 */
+		date("date"),
+		/**
+		 * The payment status of the pledge event.
+		 */
+		payment_status("payment_status"),
+		/**
+		 * The ID of the tier associated with the pledge event.
+		 */
+		tier_id("tier_id"),
+		/**
+		 * The title of the tier associated with the pledge event.
+		 */
+		tier_title("tier_title"),
+		/**
+		 * The type of the pledge event.
+		 */
+		type("type");
 
-	    private final String propertyName;
+		private final String propertyName;
 
-	    PledgeEventField(String propertyName) {
-	        this.propertyName = propertyName;
-	    }
+		PledgeEventField(String propertyName) {
+			this.propertyName = propertyName;
+		}
 
-	    /**
+		/**
 		 * Returns a collection of all available fields for the PledgeEvent resource.
 		 * 
 		 * @return a collection of PledgeEvent fields
 		 */
-	    public static Collection<PledgeEventField> getAllFields() {
-	        return List.of(values());
-	    }
+		public static Collection<PledgeEventField> getAllFields() {
+			return List.of(values());
+		}
 
-	    @Override
-	    public String getPropertyName() {
-	        return this.propertyName;
-	    }
+		@Override
+		public String getPropertyName() {
+			return this.propertyName;
+		}
 	}
 
 	private int amountCents;
@@ -79,7 +79,7 @@ public class PledgeEvent extends BaseResource {
 	private String tierId;
 	private String tierTitle;
 	private String type;
-	
+
 	// Currently a dead end
 	@Relationship("campaign")
 	private Campaign campaign;
@@ -174,7 +174,7 @@ public class PledgeEvent extends BaseResource {
 	public String getType() {
 		return type;
 	}
-	
+
 	/**
 	 * Returns the campaign being pledged to.
 	 * 

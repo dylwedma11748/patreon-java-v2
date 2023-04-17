@@ -272,7 +272,7 @@ public class Campaign extends BaseResource {
 	/**
 	 * Returns whether the campaign charges upfront. Can be null.
 	 * 
-	 * @return true if the campaign charges upfront, false otherwise
+	 * @return true if the campaign charges upfront
 	 */
 	public boolean isChargedImmediately() {
 		return isChargedImmediately;
@@ -293,7 +293,7 @@ public class Campaign extends BaseResource {
 	 * content.
 	 * 
 	 * @return true if the creator has marked the campaign as containing NSFW
-	 *         content.
+	 *         content
 	 */
 	public boolean isNSFW() {
 		return isNSFW;
@@ -312,7 +312,7 @@ public class Campaign extends BaseResource {
 	/**
 	 * Returns the URL for the main video associated with the campaign.
 	 * 
-	 * @return the URL for the main video associated with the campaign.
+	 * @return the URL for the main video associated with the campaign
 	 */
 	public String getMainVideoURL() {
 		return mainVideoURL;
@@ -370,7 +370,7 @@ public class Campaign extends BaseResource {
 	/**
 	 * Returns the URL for the RSS album artwork. Can be null.
 	 * 
-	 * @return the URL for the RSS album artwork or null.
+	 * @return the URL for the RSS album artwork or null
 	 */
 	public String getRssArtworkURL() {
 		return rssArtworkURL;
@@ -379,7 +379,7 @@ public class Campaign extends BaseResource {
 	/**
 	 * Returns the title of the campaign's RSS feed.
 	 * 
-	 * @return the title of the campaign's RSS feed.
+	 * @return the title of the campaign's RSS feed
 	 */
 	public String getRssFeedTitle() {
 		return rssFeedTitle;
@@ -452,7 +452,8 @@ public class Campaign extends BaseResource {
 	}
 
 	/**
-	 * Returns the campaign's benefits. This may return null if you don't manage this campaign.
+	 * Returns the campaign's benefits. This may return null if you don't manage
+	 * this campaign.
 	 * 
 	 * @return the campaign's benefits
 	 */
@@ -461,7 +462,8 @@ public class Campaign extends BaseResource {
 	}
 
 	/**
-	 * Returns the campaign owner. This may return null if you don't manage this campaign.
+	 * Returns the campaign owner. This may return null if you don't manage this
+	 * campaign.
 	 * 
 	 * @return the campaign owner
 	 */
@@ -470,7 +472,8 @@ public class Campaign extends BaseResource {
 	}
 
 	/**
-	 * Returns the campaign's goals. This may return null if you don't manage this campaign.
+	 * Returns the campaign's goals. This may return null if you don't manage this
+	 * campaign.
 	 * 
 	 * @return the campaign's goals
 	 */
@@ -479,7 +482,8 @@ public class Campaign extends BaseResource {
 	}
 
 	/**
-	 * Returns the campaign's tiers. This may return null if you don't manage this campaign.
+	 * Returns the campaign's tiers. This may return null if you don't manage this
+	 * campaign.
 	 * 
 	 * @return the campaign's tiers
 	 */

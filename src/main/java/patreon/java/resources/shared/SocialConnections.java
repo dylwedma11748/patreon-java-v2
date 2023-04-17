@@ -3,10 +3,11 @@ package patreon.java.resources.shared;
 import java.util.List;
 
 /**
- * A mapping from the user's connected application names to external user id on the respective application.
+ * A mapping from the user's connected application names to external user id on
+ * the respective application.
  */
 public class SocialConnections {
-	
+
 	private UserIDObject youtube;
 	private UserIDObject twitter;
 	private UserIDObject deviantart;
