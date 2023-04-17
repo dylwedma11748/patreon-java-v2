@@ -102,14 +102,18 @@ System.out.println(metaString);
 ```
 But I don't have a campaign with more than 500 members in order to test it.
 
-### Posts - /api/oauth2/v2/campaigns/{campaign_id}/posts
-This endpoint is for fetching a list of all the Posts on a given Campaign by campaign ID.
+### Posts - /api/oauth2/v2/campaigns/xxxxx/posts or /api/oauth2/v2/posts/xxxxx
+These endpoints are for fetching posts from a campaign. If you specify a campaign ID, it will pull the posts from that campaign. If you specify a post ID, it will fetch that specific post.
 ```java
 JSONAPIDocument<List<Post>> response = apiClient.fetchPosts(campaign.getID());
 List<Post> posts = response.get();
 
 for (Post post : posts) {
-    System.out.println(post.getContent());
+    System.out.println("Content: " + post.getContent());
 }
+```
+```java
+String postID = "POST_ID";
+Post post = apiClient.fetchPost(postID);
 ```
 Like the members endpoint, this endpoint also has some pagination meta. The API docs doesn't say how many results are in one return. But the meta can also still be deserialized.
