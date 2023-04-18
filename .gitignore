@@ -3,3 +3,6 @@
 
 # Ignore Gradle build output directory
 build
+
+# Ignore test file
+src/test/java/patreon/java/v2/PatreonAPITest.java
