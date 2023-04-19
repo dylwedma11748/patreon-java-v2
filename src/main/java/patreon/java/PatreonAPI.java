@@ -125,11 +125,16 @@ public class PatreonAPI {
 	 */
 	public List<Campaign> fetchCampaigns() throws IOException {
 		URIBuilder pathBuilder = new URIBuilder().setPath("campaigns").addParameter("include",
-				"tiers.benefits," + "tiers.campaign," + "tiers.tier_image,"
+				"benefits.campaign," + "benefits.deliverables.campaign," + "benefits.deliverables.benefit,"
+						+ "benefits.deliverables.member.user," + "benefits.deliverables.user," + "benefits.tiers,"
+						+ "creator.memberships.address.campaigns," + "creator.memberships.address.user,"
 						+ "creator.memberships.campaign.benefits.campaign,"
-						+ "creator.memberships.campaign.benefits.tiers," + "creator.memberships.campaign.tiers,"
-						+ "creator.memberships.currently_entitled_tiers.benefits," + "benefits.campaign,"
-						+ "benefits.deliverables.benefit," + "benefits.tiers," + "goals.campaign");
+						+ "creator.memberships.campaign.benefits.tiers.benefits,"
+						+ "creator.memberships.campaign.benefits.tiers.campaign,"
+						+ "creator.memberships.campaign.benefits.tiers.tier_image,"
+						+ "creator.memberships.campaign.tiers,"
+						+ "creator.memberships.currently_entitled_tiers.benefits," + "goals.campaign,"
+						+ "tiers.benefits," + "tiers.campaign," + "tiers.tier_image");
 		addAllFields(pathBuilder);
 		return converter.readDocumentCollection(getDataStream(pathBuilder.toString()), Campaign.class).get();
 	}
@@ -145,52 +150,135 @@ public class PatreonAPI {
 	 */
 	public Campaign fetchCampaign(String campaignID) throws IOException {
 		URIBuilder pathBuilder = new URIBuilder().setPath("campaigns/" + campaignID).addParameter("include",
-				"tiers.benefits," + "tiers.campaign," + "tiers.tier_image,"
+				"benefits.campaign," + "benefits.deliverables.campaign," + "benefits.deliverables.benefit,"
+						+ "benefits.deliverables.member.user," + "benefits.deliverables.user," + "benefits.tiers,"
+						+ "creator.memberships.address.campaigns," + "creator.memberships.address.user,"
 						+ "creator.memberships.campaign.benefits.campaign,"
-						+ "creator.memberships.campaign.benefits.tiers," + "creator.memberships.campaign.tiers,"
-						+ "creator.memberships.currently_entitled_tiers.benefits," + "benefits.campaign,"
-						+ "benefits.deliverables.benefit," + "benefits.tiers," + "goals.campaign");
+						+ "creator.memberships.campaign.benefits.tiers.benefits,"
+						+ "creator.memberships.campaign.benefits.tiers.campaign,"
+						+ "creator.memberships.campaign.benefits.tiers.tier_image,"
+						+ "creator.memberships.campaign.tiers,"
+						+ "creator.memberships.currently_entitled_tiers.benefits," + "goals.campaign,"
+						+ "tiers.benefits," + "tiers.campaign," + "tiers.tier_image");
 		addAllFields(pathBuilder);
 		return converter.readDocument(getDataStream(pathBuilder.toString()), Campaign.class).get();
 	}
 
 	/**
-	 * Returns a list of members from the specified campaign.
+	 * Returns a list of members from the specified campaign. If you request pledge
+	 * events, the list will only contain 500 members. Otherwise, it will contain
+	 * 1000 members. If you exceed these numbers, you will need to use the
+	 * pagination meta to get the rest of your members.
 	 * 
 	 * @return a list of members from the specified campaign
 	 *
-	 * @param campaignID the ID for the campaign
+	 * @param campaignID   the ID for the campaign
+	 * 
+	 * @param pledgeEvents request pledge history for each member
 	 * 
 	 * @throws IOException if the request fails
+	 * 
+	 * @see #fetchPageOfMembers(String, boolean, int, String)
 	 */
-	public JSONAPIDocument<List<Member>> fetchMembers(String campaignID) throws IOException {
-		URIBuilder pathBuilder = new URIBuilder().setPath("campaigns/" + campaignID + "/members").addParameter(
-				"include",
-				"address.campaigns," + "address.user," + "campaign.benefits.campaign,"
-						+ "campaign.benefits.deliverables.benefit," + "campaign.benefits.deliverables.campaign,"
-						+ "campaign.benefits.deliverables.member.address.campaigns,"
-						+ "campaign.benefits.deliverables.member.address.user.campaign,"
-						+ "campaign.benefits.deliverables.member.address.user.memberships,"
-						+ "campaign.benefits.deliverables.member.campaign,"
-						+ "campaign.benefits.deliverables.member.currently_entitled_tiers,"
-						+ "campaign.benefits.deliverables.member.pledge_history.campaign,"
-						+ "campaign.benefits.deliverables.member.pledge_history.patron,"
-						+ "campaign.benefits.deliverables.member.pledge_history.tier,"
-						+ "campaign.benefits.deliverables.member.user.campaign,"
-						+ "campaign.benefits.deliverables.member.user.memberships,"
-						+ "campaign.benefits.deliverables.user.campaign,"
-						+ "campaign.benefits.deliverables.user.memberships," + "campaign.benefits.tiers.benefits,"
-						+ "campaign.benefits.tiers.campaign," + "campaign.benefits.tiers.tier_image,"
-						+ "campaign.goals.campaign," + "currently_entitled_tiers.benefits.campaign,"
-						+ "currently_entitled_tiers.campaign," + "currently_entitled_tiers.tier_image,"
-						+ "pledge_history.campaign," + "pledge_history.patron," + "pledge_history.tier,"
-						+ "user.memberships.user");
+	public JSONAPIDocument<List<Member>> fetchMembers(String campaignID, boolean pledgeEvents) throws IOException {
+		String includes = "address.campaigns," + "address.user," + "campaign.benefits.campaign,"
+				+ "campaign.benefits.deliverables.benefit," + "campaign.benefits.deliverables.campaign,"
+				+ "campaign.benefits.deliverables.member.address.campaigns,"
+				+ "campaign.benefits.deliverables.member.address.user.campaign,"
+				+ "campaign.benefits.deliverables.member.address.user.memberships,"
+				+ "campaign.benefits.deliverables.member.campaign,"
+				+ "campaign.benefits.deliverables.member.currently_entitled_tiers,";
+
+		if (pledgeEvents) {
+			includes = includes.concat("campaign.benefits.deliverables.member.pledge_history.campaign,"
+					+ "campaign.benefits.deliverables.member.pledge_history.patron,"
+					+ "campaign.benefits.deliverables.member.pledge_history.tier,");
+		}
+
+		includes = includes.concat("campaign.benefits.deliverables.member.user.campaign,"
+				+ "campaign.benefits.deliverables.member.user.memberships,"
+				+ "campaign.benefits.deliverables.user.campaign," + "campaign.benefits.deliverables.user.memberships,"
+				+ "campaign.benefits.tiers.benefits," + "campaign.benefits.tiers.campaign,"
+				+ "campaign.benefits.tiers.tier_image," + "campaign.goals.campaign,"
+				+ "currently_entitled_tiers.benefits.campaign," + "currently_entitled_tiers.campaign,"
+				+ "currently_entitled_tiers.tier_image,");
+
+		if (pledgeEvents) {
+			includes = includes.concat("pledge_history.campaign," + "pledge_history.patron," + "pledge_history.tier,");
+		}
+
+		includes = includes.concat("user.memberships.user");
+
+		URIBuilder pathBuilder = new URIBuilder().setPath("campaigns/" + campaignID + "/members")
+				.addParameter("include", includes);
 		addAllFields(pathBuilder);
 		return converter.readDocumentCollection(getDataStream(pathBuilder.toString()), Member.class);
 	}
 
 	/**
-	 * Returns a member specified by their member ID.
+	 * Returns a list of members from the specified campaign. This is made for use
+	 * with the pagination meta if your previous response didn't contain all of your
+	 * members. If this response doesn't contain all of your members, it may also
+	 * have some pagination meta.
+	 * 
+	 * @return a list of members from the specified campaign
+	 *
+	 * @param campaignID   the ID for the campaign
+	 * 
+	 * @param pledgeEvents request pledge history for each member
+	 * 
+	 * @param pageSize     the number of members to request
+	 * 
+	 * @param cursor       the next cursor from the pagination meta
+	 * 
+	 * @throws IOException if the request fails
+	 */
+	public JSONAPIDocument<List<Member>> fetchPageOfMembers(String campaignID, boolean pledgeEvents, int pageSize,
+			String cursor) throws IOException {
+		String includes = "address.campaigns," + "address.user," + "campaign.benefits.campaign,"
+				+ "campaign.benefits.deliverables.benefit," + "campaign.benefits.deliverables.campaign,"
+				+ "campaign.benefits.deliverables.member.address.campaigns,"
+				+ "campaign.benefits.deliverables.member.address.user.campaign,"
+				+ "campaign.benefits.deliverables.member.address.user.memberships,"
+				+ "campaign.benefits.deliverables.member.campaign,"
+				+ "campaign.benefits.deliverables.member.currently_entitled_tiers,";
+
+		if (pledgeEvents) {
+			includes = includes.concat("campaign.benefits.deliverables.member.pledge_history.campaign,"
+					+ "campaign.benefits.deliverables.member.pledge_history.patron,"
+					+ "campaign.benefits.deliverables.member.pledge_history.tier,");
+		}
+
+		includes = includes.concat("campaign.benefits.deliverables.member.user.campaign,"
+				+ "campaign.benefits.deliverables.member.user.memberships,"
+				+ "campaign.benefits.deliverables.user.campaign," + "campaign.benefits.deliverables.user.memberships,"
+				+ "campaign.benefits.tiers.benefits," + "campaign.benefits.tiers.campaign,"
+				+ "campaign.benefits.tiers.tier_image," + "campaign.goals.campaign,"
+				+ "currently_entitled_tiers.benefits.campaign," + "currently_entitled_tiers.campaign,"
+				+ "currently_entitled_tiers.tier_image,");
+
+		if (pledgeEvents) {
+			includes = includes.concat("pledge_history.campaign," + "pledge_history.patron," + "pledge_history.tier,");
+		}
+
+		includes = includes.concat("user.memberships.user");
+
+		URIBuilder pathBuilder = new URIBuilder().setPath("campaigns/" + campaignID + "/members")
+				.addParameter("page[size]", String.valueOf(pageSize));
+
+		if (cursor != null) {
+			pathBuilder.addParameter("page[cursor]", cursor);
+		}
+
+		pathBuilder.addParameter("include", includes);
+		addAllFields(pathBuilder);
+
+		return converter.readDocumentCollection(getDataStream(pathBuilder.toString()), Member.class);
+	}
+
+	/**
+	 * Returns a member specified by their member ID. Pledge events are requested by
+	 * default.
 	 *
 	 * @return a member specified by their member ID
 	 *
@@ -224,18 +312,52 @@ public class PatreonAPI {
 	}
 
 	/**
-	 * Returns a list of posts from the specified campaign.
+	 * Returns a list of posts from the specified campaign. Patreon's API
+	 * documentation doesn't say how many posts are in a response. If this response
+	 * doesn't contain all of your posts, you will need to use the pagination meta
+	 * to get the rest of your posts.
 	 * 
 	 * @return a list of posts from the campaign
 	 * 
 	 * @param campaignID the ID for the campaign
 	 * 
 	 * @throws IOException if the request fails
+	 * 
+	 * @see #fetchPageOfPosts(String, int, String)
 	 */
 	public JSONAPIDocument<List<Post>> fetchPosts(String campaignID) throws IOException {
 		URIBuilder pathBuilder = new URIBuilder().setPath("campaigns/" + campaignID + "/posts").addParameter("include",
 				"campaign,user.campaign");
 		addAllFields(pathBuilder);
+		return converter.readDocumentCollection(getDataStream(pathBuilder.toString()), Post.class);
+	}
+
+	/**
+	 * Returns a list of posts from the specified campaign. This is made for use
+	 * with the pagination meta if your previous response didn't contain all of your
+	 * posts. If this response doesn't contain all of your posts, it may also have
+	 * some pagination meta.
+	 * 
+	 * @return a list of posts from the campaign
+	 * 
+	 * @param campaignID the ID for the campaign
+	 * 
+	 * @param pageSize   the number of posts to request
+	 * 
+	 * @param cursor     the next cursor from the pagination meta
+	 */
+	public JSONAPIDocument<List<Post>> fetchPageOfPosts(String campaignID, int pageSize, String cursor)
+			throws IOException {
+		URIBuilder pathBuilder = new URIBuilder().setPath("campaigns/" + campaignID + "/posts")
+				.addParameter("page[size]", String.valueOf(pageSize));
+
+		if (cursor != null) {
+			pathBuilder.addParameter("page[cursor]", cursor);
+		}
+
+		pathBuilder.addParameter("include", "campaign,user.campaign");
+		addAllFields(pathBuilder);
+
 		return converter.readDocumentCollection(getDataStream(pathBuilder.toString()), Post.class);
 	}
 
