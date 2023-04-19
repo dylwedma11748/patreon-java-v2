@@ -344,6 +344,8 @@ public class PatreonAPI {
 	 * 
 	 * @param pageSize   the number of posts to request
 	 * 
+	 * @throws IOException if the request fails
+	 * 
 	 * @param cursor     the next cursor from the pagination meta
 	 */
 	public JSONAPIDocument<List<Post>> fetchPageOfPosts(String campaignID, int pageSize, String cursor)
