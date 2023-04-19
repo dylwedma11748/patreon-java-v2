@@ -72,7 +72,7 @@ Campaign campaign = campaigns.get(0);
 ### Members - /api/oauth2/v2/campaigns/xxxxx/members or /api/oauth2/v2/members/xxxxx
 These endpoints are for fetching information about members. If you specify a campaign ID, you will get a list of members for that campaign. If you specify a member ID, you will get information about that specific member.
 ```java
-JSONAPIDocument<List<Member>> response = apiClient.fetchMembers(campaign.getID());
+JSONAPIDocument<List<Member>> response = apiClient.fetchMembers(campaign.getID(), true);
 List<Member> members = response.get();
 
 for (Member member : members) {
@@ -83,24 +83,13 @@ for (Member member : members) {
 String ID = "MEMBER_ID";
 Member member = apiClient.fetchMember(ID);
 ```
-The response from the client does also have some pagination meta.
-```json
-"meta": {
-    "pagination": {
-        "cursors": {
-             "next": null
-        },
-        "total": 1
-    }
-}
-```
-Returns from this endpoint have 500 results in one page. This is because the library requests pledge history for each member. This pagination meta is supposed to return a next page cursor. The library does has a resource that can deserialize this.
+
+#### Member Pagination
+If you request pledge events, the response from this will only return 500 members, otherwise it will return 1000 members. If your campaign exceeds these numbers, you'll need to use the pagination meta to get the rest of your members.
 ```java
 PaginationMeta meta = response.getMeta(PaginationMeta.class);
-StringBuilder metaString = new StringBuilder().append("\n[meta]").append("\ntotal: " + meta.getTotal()).append("\nnext: " + meta.getNextCursor() + "\n");
-System.out.println(metaString);
+JSONAPIDocument<List<Member>> response2 = apiClient.fetchPageOfMembers(campaign.getID(), true, 500, meta.getNextCursor());
 ```
-But I don't have a campaign with more than 500 members in order to test it.
 
 ### Posts - /api/oauth2/v2/campaigns/xxxxx/posts or /api/oauth2/v2/posts/xxxxx
 These endpoints are for fetching posts from a campaign. If you specify a campaign ID, it will pull the posts from that campaign. If you specify a post ID, it will fetch that specific post.
@@ -116,4 +105,10 @@ for (Post post : posts) {
 String postID = "POST_ID";
 Post post = apiClient.fetchPost(postID);
 ```
-Like the members endpoint, this endpoint also has some pagination meta. The API docs doesn't say how many results are in one return. But the meta can also still be deserialized.
+
+#### Post Pagination
+Patreon's API documentation doesn't say how many posts are in a response. If this response doesn't contain all of your posts, you will need to use the pagination meta to get the rest of your posts.
+```java
+PaginationMeta meta = response.getMeta(PaginationMeta.class);
+JSONAPIDocument<List<Post>> response2 = apiClient.fetchPageOfPosts(campaign.getID(), 500, meta.getNextCursor());
+```
