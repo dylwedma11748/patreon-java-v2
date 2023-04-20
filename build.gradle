@@ -9,7 +9,7 @@ plugins {
 }
 
 repositories {
-    mavenLocal()
+    mavenCentral()
     
     maven {
         url = uri('https://repo.maven.apache.org/maven2/')
@@ -35,8 +35,8 @@ dependencies {
     implementation 'com.google.guava:guava:30.1.1-jre'
 }
 
-group = '7thousandnumbers'
-version = '0.0.1'
+group = 'org.7thousandnumbers'
+version = '1.0.0'
 description = 'patreon-java-v2'
 
 publishing {
