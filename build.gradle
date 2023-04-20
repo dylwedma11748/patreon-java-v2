@@ -47,7 +47,7 @@ publishing {
             
             credentials {
                 username = project.findProperty("gpr.user") ?: System.getenv("dylwedma11748")
-                password = project.findProperty("gpr.key") ?: System.getenv("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")
+                password = project.findProperty("gpr.key") ?: System.getenv("")
             }
         }
     }
