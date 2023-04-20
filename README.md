@@ -1,10 +1,7 @@
 # patreon-java-v2
  A work in progress Java library for handling API calls to Patreon's APIv2 endpoints.
  
- ### Library currently in active development
- In it's current state, all fields and relationships are confirmed to be working so long as you use the identity endpoint. I'm working on achieving this for all other endpoints as well. The library is still not ready for release yet.
- 
-Webhooks and OAuthClients are currently not supported.
+**Webhooks and OAuthClients are not currently supported.**
  
 ## Using the library
 Full documentation for the library is available [here](https://dylwedma11748.github.io/patreon-java-v2/index.html).
