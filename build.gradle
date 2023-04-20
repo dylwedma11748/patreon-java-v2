@@ -40,8 +40,20 @@ version = '1.0.0'
 description = 'patreon-java-v2'
 
 publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/dylwedma11748/patreon-java-v2")
+            
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("dylwedma11748")
+                password = project.findProperty("gpr.key") ?: System.getenv("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")
+            }
+        }
+    }
+    
     publications {
-        maven(MavenPublication) {
+        gpr(MavenPublication) {
             from(components.java)
         }
     }
