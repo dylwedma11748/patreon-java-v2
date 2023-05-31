@@ -5,7 +5,6 @@
 plugins {
     id 'java'
     id 'java-library'
-    id 'maven-publish'
 }
 
 repositories {
@@ -38,26 +37,6 @@ dependencies {
 group = 'org.7thousandnumbers'
 version = '1.0.0'
 description = 'patreon-java-v2'
-
-publishing {
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/dylwedma11748/patreon-java-v2")
-            
-            credentials {
-                username = project.findProperty("gpr.user") ?: System.getenv("dylwedma11748")
-                password = project.findProperty("gpr.key") ?: System.getenv("")
-            }
-        }
-    }
-    
-    publications {
-        gpr(MavenPublication) {
-            from(components.java)
-        }
-    }
-}
 
 java {
     toolchain {
