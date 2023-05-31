@@ -8,6 +8,36 @@ Full documentation for the library is available [here](https://dylwedma11748.git
 
 To use the library, you'll need your creator access token. You can find it on the [Patreon Platform](https://www.patreon.com/portal/registration/register-clients). Do **NOT** share your token with anyone else.
 
+### Importing
+
+Maven:
+```XML
+<repositories>
+   <repository>
+      <id>jitpack.io</id>
+      <url>https://jitpack.io</url>
+   </repository>
+</repositories>
+
+<dependency>
+   <groupId>com.github.dylwedma11748</groupId>
+   <artifactId>patreon-java-v2</artifactId>
+   <version>-SNAPSHOT</version>
+</dependency>
+```
+Gradle:
+```Gradle
+repositories {
+    maven { 
+        url 'https://jitpack.io' 
+    }
+}
+
+dependencies {
+    implementation 'com.github.dylwedma11748:patreon-java-v2:-SNAPSHOT'
+}
+```
+
 ### Initializing
 Create a new instance of PatreonAPI with your access token.
 ```java
