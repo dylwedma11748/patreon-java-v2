@@ -1,3 +1,5 @@
+[![](https://jitpack.io/v/dylwedma11748/patreon-java-v2.svg)](https://jitpack.io/#dylwedma11748/patreon-java-v2)
+
 # patreon-java-v2
  A work in progress Java library for handling API calls to Patreon's APIv2 endpoints.
  
@@ -34,7 +36,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.dylwedma11748:patreon-java-v2:-SNAPSHOT'
+    implementation 'com.github.dylwedma11748:patreon-java-v2:dcf422ad0f'
 }
 ```
 
