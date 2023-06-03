@@ -24,7 +24,7 @@ Maven:
 <dependency>
    <groupId>com.github.dylwedma11748</groupId>
    <artifactId>patreon-java-v2</artifactId>
-   <version>dcf422ad0f</version>
+   <version>6909b6d164</version>
 </dependency>
 ```
 Gradle:
@@ -36,7 +36,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.dylwedma11748:patreon-java-v2:dcf422ad0f'
+    implementation 'com.github.dylwedma11748:patreon-java-v2:6909b6d164'
 }
 ```
 
